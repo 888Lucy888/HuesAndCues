@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  *
  * @author Lucy
  */
-public class HuesAndCuesProject extends Application {
+public class Runner extends Application {
     
     @Override
     public void start(Stage primaryStage) {
