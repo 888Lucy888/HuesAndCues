@@ -46,6 +46,7 @@ public class Runner extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        MailSender.sendTo("crlvlz0215@gmail.com");
     }
     
 }
