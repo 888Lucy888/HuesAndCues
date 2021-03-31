@@ -5,13 +5,13 @@
  */
 package GUI;
 
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
 
 /**
  *
  * @author Lucy
  */
-public class ColorBlock extends StackPane{
+public class ColorBlock extends Button{
     private String color;
     private int height;
     private int length;
