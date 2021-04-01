@@ -15,12 +15,11 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author Guest
+ * @author Carlos
  */
 public class MailSender {
-    public static void sendTo(String email){
+    public static void sendTo(String email, String text){
         
-        try {
             Properties proporties = new Properties();
             proporties.put("mail.smtp.auth", "true");
             proporties.put("mail.smtp.starttls.enable", "true");
@@ -37,18 +36,23 @@ public class MailSender {
                 }
             });
             
+            setMessage(text, email, session);
+    }
+    
+    private static void setMessage(String text, String email, Session session){
+        try {
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(myEmail));
+            msg.setFrom(new InternetAddress("HuesAndCuesUP@gmail.com"));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             msg.setSubject("Hues and Cues");
-            msg.setText("Test Email by Carlos");
+            msg.setText(text);
             
             Transport.send(msg);
-            
         } catch (AddressException ex) {
             Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
             Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }

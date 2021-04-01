@@ -45,8 +45,8 @@ public class Runner extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        MailSender.sendTo("crlvlz0215@gmail.com", "Test message by Carlos");
         launch(args);
-        MailSender.sendTo("crlvlz0215@gmail.com");
     }
     
 }
