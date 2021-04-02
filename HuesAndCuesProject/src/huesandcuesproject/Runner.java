@@ -5,6 +5,7 @@
  */
 package huesandcuesproject;
 
+import GUI.ColorBlock;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +22,7 @@ public class Runner extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
+        ColorBlock btn = new ColorBlock("53251A");
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -45,7 +46,7 @@ public class Runner extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MailSender.sendTo("crlvlz0215@gmail.com", "Test message by Carlos");
+        //MailSender.sendTo("crlvlz0215@gmail.com", "Test message by Carlos");
         launch(args);
     }
     

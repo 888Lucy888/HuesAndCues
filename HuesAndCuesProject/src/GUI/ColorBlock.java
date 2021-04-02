@@ -15,10 +15,12 @@ public class ColorBlock extends Button{
     private String color;
     private int height;
     private int length;
+    private String position;
     
     public ColorBlock(String color){
         this.setColor(color);
         this.setSize();
+        setStyle("-fx-background-color: #" + color + ";");
     }
     
     private void setColor(String color){
@@ -32,6 +34,14 @@ public class ColorBlock extends Button{
     private void setSize(){
         //.setMinSize(height, length);
         //.setMaxSize(height, length);
+    }
+    
+    public void setPosition(String letter, String number){
+        this.position = letter + number;
+    }
+    
+    public String getPosition(){
+        return this.position;
     }
     
 }

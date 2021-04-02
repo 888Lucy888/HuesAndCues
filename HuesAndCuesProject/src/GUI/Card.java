@@ -30,4 +30,16 @@ public class Card extends HBox{
     //????????????????????????????????????????????
     
     
+    //Overrides normal toString to point out the colors...
+    //Should change to show position...
+    @Override
+    public String toString(){
+        String text = "";
+        text += colors[0].getPosition() + " ";
+        text += colors[1].getPosition() + " ";
+        text += colors[2].getPosition() + " ";
+        text += colors[3].getPosition() + " ";
+        return text;
+    }
+    
 }
