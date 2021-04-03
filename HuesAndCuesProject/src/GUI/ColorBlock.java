@@ -5,7 +5,12 @@
  */
 package GUI;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -17,10 +22,10 @@ public class ColorBlock extends Button{
     private int length;
     private String position;
     
-    public ColorBlock(String color){
+    public ColorBlock(String color) throws Exception{
         this.setColor(color);
         this.setSize();
-        setStyle("-fx-background-color: #" + color + ";");
+        this.setStyle("-fx-background-color:#" + this.getColor() + ";");
     }
     
     private void setColor(String color){
