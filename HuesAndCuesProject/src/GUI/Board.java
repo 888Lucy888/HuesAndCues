@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 /**
  *
@@ -17,13 +18,34 @@ import javafx.scene.layout.BorderPane;
  */
 public class Board extends BorderPane{
     
-    public Board () throws FileNotFoundException, IOException{
-        FileReader fr = new FileReader("css color file route");
-        BufferedReader br = new BufferedReader(fr);
+    ColorBlock [][] blocks = new ColorBlock [30] [16];
+    GridPane gp;
+    
+    public Board () throws Exception{
         
-        while(!br.readLine().isEmpty()){
-            //String colorCodes[] = br.readLine().split(" ");
+        gp = new GridPane();
+        
+        String line;
+        
+        FileReader boardCSV = new FileReader("colorMatrix.csv");
+        //FileReader fr = new FileReader("css color file route");
+        BufferedReader br = new BufferedReader(boardCSV);
+        int i = 0;
+        while((line = br.readLine()) != null){
+            String [] seperator = line.split(",");
+            for(int j = 0; j < 30; j++){
+                blocks [j] [i] = new ColorBlock(seperator[j]);
+                GridPane.setConstraints(blocks [j] [i], j, i);
+                gp.getChildren().add(blocks [j] [i]);
+            }
+            i++;
         }
+        
+        this.setCenter(gp);
+        
+        //while(!br.readLine().isEmpty()){
+            //String colorCodes[] = br.readLine().split(" ");
+        //}
         
     }
     
