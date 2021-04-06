@@ -11,6 +11,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStrokeStyle;
 
 /**
  *
@@ -18,14 +20,14 @@ import javafx.scene.paint.Color;
  */
 public class ColorBlock extends Button{
     private String color;
-    private int height;
-    private int length;
+    private final int height = 30;
+    private final int length = 30;
     private String position;
     
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
         this.setSize();
-        this.setStyle("-fx-background-color:#" + this.getColor() + ";");
+        this.setStyle("-fx-background-color:#" + this.getColor() + ";-fx-border-color: black");
     }
     
     private void setColor(String color){
@@ -37,8 +39,8 @@ public class ColorBlock extends Button{
     }
     
     private void setSize(){
-        //.setMinSize(height, length);
-        //.setMaxSize(height, length);
+        this.setMinSize(length, height);
+        this.setMaxSize(length, height);
     }
     
     public void setPosition(String letter, String number){

@@ -7,6 +7,7 @@ package huesandcuesproject;
 
 import GUI.ColorBlock;
 import GUI.Board;
+import GUI.GameLayout;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -47,7 +48,7 @@ public class Runner extends Application {
             Player player = new Player(pName, pEmail, Color.RED);
             players.add(player);
         }
-        Board game = new Board();
+        GameLayout game = new GameLayout();
         ColorBlock btn = new ColorBlock("53251A");
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -61,7 +62,7 @@ public class Runner extends Application {
         //StackPane root = new StackPane();
         //root.getChildren().add(game);
         
-        Scene scene = new Scene(game, 300, 250);
+        Scene scene = new Scene(game, 1050, 800);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);

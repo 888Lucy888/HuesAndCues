@@ -23,11 +23,14 @@ import javafx.scene.shape.Polygon;
  */
 public class Board extends BorderPane{
     
+    private final int height = 650;
+    private final int length = 900;
     private ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     
     public Board () throws Exception{
         
+        this.setSize();
         gp = new GridPane();
         
         String line;
@@ -62,12 +65,16 @@ public class Board extends BorderPane{
             i++;
         }
         
-        this.setCenter(gp);
+        this.setBottom(gp);
         
         //while(!br.readLine().isEmpty()){
             //String colorCodes[] = br.readLine().split(" ");
-        //}
-        
+        //}    
+    }
+    
+    private void setSize(){
+        this.setMinSize(length, height);
+        this.setMaxSize(length, height);
     }
     
 }
