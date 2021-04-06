@@ -5,6 +5,8 @@
  */
 package huesandcuesproject;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Lucy
@@ -13,10 +15,16 @@ public class Player {
     private String name;
     private int score = 0;
     private String email;
+    private Color playerColor;
     
-    public Player(String name, String email){
+    private Player(){
+        
+    }
+    
+    public Player(String name, String email, Color color){
         this.setName(name);
         this.setEmail(email);
+        this.setColor(color);
     }
 
     public String getName() {
@@ -41,6 +49,14 @@ public class Player {
 
     private void setEmail(String email) {
         this.email = email;
+    }
+    
+    private void setColor(Color newColor){
+        this.playerColor = newColor;
+    }
+    
+    public Color getColor(){
+        return this.playerColor;
     }
     
 }

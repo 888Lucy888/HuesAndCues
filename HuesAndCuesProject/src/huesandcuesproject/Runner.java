@@ -13,13 +13,30 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Lucy
  */
 public class Runner extends Application {
+    
+    JFrame frame;
+    Player p1;
+    Player p2;
+    Player p3;
+    Player activePlayer;
+    
+    @Override
+    public void init(){
+        frame = new JFrame();
+        String p1Name = JOptionPane.showInputDialog(frame, "Enter name: ");
+        String p1Email = JOptionPane.showInputDialog(frame, "Enter eMail: ");
+        p1 = new Player(p1Name, p1Email, Color.RED);
+    }
     
     @Override
     public void start(Stage primaryStage) throws Exception{
