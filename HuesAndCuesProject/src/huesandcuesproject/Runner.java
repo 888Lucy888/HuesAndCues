@@ -7,13 +7,17 @@ package huesandcuesproject;
 
 import GUI.ColorBlock;
 import GUI.Board;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,8 +25,28 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
+    JFrame frame;
+    Player activePlayer;
+    
+    @Override
+    public void init(){
+    }
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
+        ArrayList<Player> players = new ArrayList<Player>();
+        frame = new JFrame();
+        int nOfPlayers;
+        do{
+            String numberOfPlayers = JOptionPane.showInputDialog(frame, "Enter number of players (3-10): ");
+            nOfPlayers = Integer.parseInt(numberOfPlayers);
+        }while(nOfPlayers>10 || nOfPlayers<3);
+        for(int i = 0; i<nOfPlayers; i++){
+            String pName = JOptionPane.showInputDialog(frame, "Enter name: ");
+            String pEmail = JOptionPane.showInputDialog(frame, "Enter eMail: ");
+            Player player = new Player(pName, pEmail, Color.RED);
+            players.add(player);
+        }
         Board game = new Board();
         ColorBlock btn = new ColorBlock("53251A");
         btn.setText("Say 'Hello World'");
