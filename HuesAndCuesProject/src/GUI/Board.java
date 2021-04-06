@@ -33,7 +33,6 @@ public class Board extends BorderPane{
         String line;
         
         FileReader boardCSV = new FileReader("colorMatrix.csv");
-        //FileReader fr = new FileReader("css color file route");
         BufferedReader br = new BufferedReader(boardCSV);
         int i = 0;
         while((line = br.readLine()) != null){
