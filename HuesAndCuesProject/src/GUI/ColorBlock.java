@@ -26,7 +26,7 @@ public class ColorBlock extends Button{
     
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
-        this.setSize();
+        this.setSize(length, height);
         this.setStyle("-fx-background-color:#" + this.getColor() + ";-fx-border-color: black");
     }
     
@@ -38,7 +38,7 @@ public class ColorBlock extends Button{
         return this.color;
     }
     
-    private void setSize(){
+    protected void setSize(int length, int height){
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
