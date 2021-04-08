@@ -7,6 +7,7 @@ package GUI;
 
 import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -26,15 +28,17 @@ import javafx.scene.shape.Polygon;
  */
 public class Board extends BorderPane{
     
-    private final int height = 650;
-    private final int length = 900;
     private ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
     
     public Board (int nPlayers) throws Exception{
         
-        this.setSize();
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double length = screenSize.getWidth() / 2;
+        double height = screenSize.getHeight() / 2;
+        
+        this.setSize(length, height);
         gp = new GridPane();
         
         String line;
@@ -74,6 +78,7 @@ public class Board extends BorderPane{
             i++;
         }
         
+        gp.setAlignment(Pos.CENTER);
         this.setBottom(gp);
         
         //while(!br.readLine().isEmpty()){
@@ -81,7 +86,7 @@ public class Board extends BorderPane{
         //}    
     }
     
-    private void setSize(){
+    private void setSize(double length, double height){
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }

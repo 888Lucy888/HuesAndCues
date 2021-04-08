@@ -8,6 +8,7 @@ package huesandcuesproject;
 import GUI.ColorBlock;
 import GUI.Board;
 import GUI.GameLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -36,6 +37,9 @@ public class Runner extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth() / 1.8;
+        double height = screenSize.getHeight() / 1.5;
         frame = new JFrame();
         int nOfPlayers;
         do{
@@ -91,7 +95,7 @@ public class Runner extends Application {
         //StackPane root = new StackPane();
         //root.getChildren().add(game);
         
-        Scene scene = new Scene(game, 1050, 800);
+        Scene scene = new Scene(game, width, height);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);

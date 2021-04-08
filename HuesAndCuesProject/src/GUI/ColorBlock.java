@@ -20,8 +20,8 @@ import javafx.scene.layout.BorderStrokeStyle;
  */
 public class ColorBlock extends Button{
     private String color;
-    private final int height = 30;
-    private final int length = 30;
+    private final int height = 25;
+    private final int length = 25;
     private String position;
     
     private ColorBlock(){

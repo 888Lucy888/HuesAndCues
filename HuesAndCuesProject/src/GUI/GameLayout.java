@@ -6,6 +6,7 @@
 package GUI;
 
 import huesandcuesproject.Player;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,15 +22,19 @@ import javafx.scene.paint.Color;
  * @author Lucy
  */
 public class GameLayout extends BorderPane{
-    private final int height = 800;
-    private final int length = 1050;
     
     public GameLayout(int nPlayers) throws Exception{
-        this.setSize();
+        
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double length = screenSize.getWidth() / 10;
+        double height = screenSize.getHeight() / 10;
+    
+        
+        this.setSize(length, height);
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
-        mainGp.add(new Board(nPlayers), 0, 3);
         mainGp.add(new ScoreBoard(), 0, 0);
+        mainGp.add(new Board(nPlayers), 0, 1);
         //Board gameBoard = new Board();
         //this.setCenter(gameBoard);
         //ScoreBoard scoreBoard = new ScoreBoard();
@@ -38,7 +43,7 @@ public class GameLayout extends BorderPane{
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
     
-    private void setSize(){
+    private void setSize(double length, double height){
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
