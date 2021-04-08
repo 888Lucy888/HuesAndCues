@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
@@ -22,11 +24,11 @@ public class GameLayout extends BorderPane{
     private final int height = 800;
     private final int length = 1050;
     
-    public GameLayout() throws Exception{
+    public GameLayout(int nPlayers) throws Exception{
         this.setSize();
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
-        mainGp.add(new Board(), 0, 3);
+        mainGp.add(new Board(nPlayers), 0, 3);
         mainGp.add(new ScoreBoard(), 0, 0);
         //Board gameBoard = new Board();
         //this.setCenter(gameBoard);

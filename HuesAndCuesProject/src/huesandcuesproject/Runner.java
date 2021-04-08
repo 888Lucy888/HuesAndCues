@@ -26,8 +26,9 @@ import javax.swing.JOptionPane;
  */
 public class Runner extends Application {
     
-    JFrame frame;
-    Player activePlayer;
+    private JFrame frame;
+    public static Player activePlayer;
+    public static ArrayList<Player> players = new ArrayList<Player>();
     
     @Override
     public void init(){
@@ -35,7 +36,6 @@ public class Runner extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ArrayList<Player> players = new ArrayList<Player>();
         frame = new JFrame();
         int nOfPlayers;
         do{
@@ -45,19 +45,48 @@ public class Runner extends Application {
         for(int i = 0; i<nOfPlayers; i++){
             String pName = JOptionPane.showInputDialog(frame, "Enter name: ");
             String pEmail = JOptionPane.showInputDialog(frame, "Enter eMail: ");
-            Player player = new Player(pName, pEmail, Color.RED);
-            players.add(player);
-        }
-        GameLayout game = new GameLayout();
-        ColorBlock btn = new ColorBlock("53251A");
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+            Color color;
+            switch(i){
+                case 0:
+                    color = Color.RED;
+                    break;
+                case 1:
+                    color = Color.BLUE;
+                    break;
+                case 2:
+                    color = Color.GREEN;
+                    break;
+                case 3:
+                    color = Color.ORANGE;
+                    break;
+                case 4:
+                    color = Color.BLUEVIOLET;
+                    break;
+                case 5:
+                    color = Color.BURLYWOOD;
+                    break;
+                case 6:
+                    color = Color.DARKGOLDENROD;
+                    break;
+                case 7:
+                    color = Color.DARKRED;
+                    break;
+                case 8:
+                    color = Color.CORAL;
+                    break;
+                case 9:
+                    color = Color.GREY;
+                    break;
+                default:
+                    color = Color.BLACK;
+                    break;
             }
-        });
+            Player player = new Player(pName, pEmail, color);
+            players.add(player);
+            activePlayer = players.get(0);
+        }
+        GameLayout game = new GameLayout(nOfPlayers);
+        //ColorBlock btn = new ColorBlock("53251A");
         
         //StackPane root = new StackPane();
         //root.getChildren().add(game);
@@ -68,7 +97,7 @@ public class Runner extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
+    
     /**
      * @param args the command line arguments
      */

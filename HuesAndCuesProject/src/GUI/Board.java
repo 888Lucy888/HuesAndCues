@@ -5,10 +5,13 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
+import huesandcuesproject.Runner;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.BorderPane;
@@ -27,8 +30,9 @@ public class Board extends BorderPane{
     private final int length = 900;
     private ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
+    private int iPlayers = 0;
     
-    public Board () throws Exception{
+    public Board (int nPlayers) throws Exception{
         
         this.setSize();
         gp = new GridPane();
@@ -56,7 +60,12 @@ public class Board extends BorderPane{
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
+                        tri.setFill(Runner.activePlayer.getColor());
                         tri.setVisible(true);
+                        iPlayers++;
+                        if(iPlayers == nPlayers)
+                            iPlayers = 0;
+                        Runner.activePlayer = Runner.players.get(iPlayers);
                     }
                 });
                 GridPane.setConstraints(sp, j, i);
