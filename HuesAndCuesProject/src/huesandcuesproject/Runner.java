@@ -102,9 +102,9 @@ public class Runner extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
-        ColorBlock color = new ColorBlock("53251A");
-        MailSender.sendCard("0240599@up.edu.mx", color);
-        //launch(args);
+        //ColorBlock color = new ColorBlock("53251A");
+        //MailSender.sendCard("0240599@up.edu.mx", color);
+        launch(args);
     }
     
 }

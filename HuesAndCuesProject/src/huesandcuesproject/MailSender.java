@@ -42,7 +42,46 @@ public class MailSender {
             setMessage(text, email, session);
     }
     
-    public static void sendCard(String email, ColorBlock color){
+//    public static void sendCard(String email, ColorBlock color){
+//        Properties proporties = new Properties();
+//        proporties.put("mail.smtp.auth", "true");
+//        proporties.put("mail.smtp.starttls.enable", "true");
+//        proporties.put("mail.smtp.host", "smtp.gmail.com");
+//        proporties.put("mail.smtp.port", 587);
+//            
+//        String myEmail = "HuesAndCuesUP@gmail.com";
+//        String password = "UPOOP2021";
+//            
+//        Session session = Session.getInstance(proporties, new Authenticator() {
+//        @Override
+//        protected PasswordAuthentication getPasswordAuthentication(){
+//            return new PasswordAuthentication(myEmail, password);
+//            }
+//        });
+//        
+//        String cardContent;
+//        
+//        cardContent = "<html>"
+//                + "<head> <style> .colored { background-color: #" + color.getColor() + ";"
+//                + "width: 25px; height: 25px;} </style></head>"
+//                + "<body><div><div class = 'colored'></div></div></body></html>";
+//        
+//        try {
+//            Message msg = new MimeMessage(session);
+//            msg.setFrom(new InternetAddress("HuesAndCuesUP@gmail.com"));
+//            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+//            msg.setSubject("Hues and Cues");
+//            msg.setContent(cardContent, "text/html;charset=UTF-8");
+//            msg.saveChanges();
+//            Transport.send(msg);
+//        } catch (AddressException ex) {
+//            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (MessagingException ex) {
+//            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    
+    public static void sendHTML(String email, String html){
         Properties proporties = new Properties();
         proporties.put("mail.smtp.auth", "true");
         proporties.put("mail.smtp.starttls.enable", "true");
@@ -59,18 +98,12 @@ public class MailSender {
             }
         });
         
-        String cardContent;
-        
-        cardContent = "<html>"
-                + "<head> <style> .colored { background-color: " + color.getColor() + ";}"
-                + "<body><div><div class = 'colored'>This is your color</div></div></body></html>";
-        
         try {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("HuesAndCuesUP@gmail.com"));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             msg.setSubject("Hues and Cues");
-            msg.setContent(cardContent, "text/html;charset=UTF-8");
+            msg.setContent(html, "text/html;charset=UTF-8");
             msg.saveChanges();
             Transport.send(msg);
         } catch (AddressException ex) {
