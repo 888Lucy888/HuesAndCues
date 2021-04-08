@@ -24,6 +24,10 @@ public class ColorBlock extends Button{
     private final int length = 25;
     private String position;
     
+    private ColorBlock(){
+        
+    }
+    
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
         this.setSize(length, height);
