@@ -57,8 +57,8 @@ public class Runner extends Application {
         }
         activePlayer = players.get(0);
         
+        userInput.askHint();
         GameLayout game = new GameLayout(nOfPlayers);
-        
         Scene scene = new Scene(game, width, height);
         
         primaryStage.setTitle("Hues And Cues");

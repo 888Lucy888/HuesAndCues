@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +23,8 @@ import javafx.scene.paint.Color;
  * @author Lucy
  */
 public class GameLayout extends BorderPane{
+    
+    private static Label LBLHINT;
     
     public GameLayout(int nPlayers) throws Exception{
         
@@ -40,6 +43,8 @@ public class GameLayout extends BorderPane{
         //ScoreBoard scoreBoard = new ScoreBoard();
         //this.setTop(scoreBoard);
         this.setCenter(mainGp);
+        this.setBottom(LBLHINT);
+        LBLHINT.setVisible(true);
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
     
@@ -47,4 +52,13 @@ public class GameLayout extends BorderPane{
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
+    
+    public static void setLBLHINT(Label label){
+        LBLHINT = label;
+    }
+    
+    public static Label getLBLHINT(){
+        return LBLHINT;
+    }
+    
 }
