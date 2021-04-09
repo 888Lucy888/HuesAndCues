@@ -46,6 +46,7 @@ public class Runner extends Application {
         }
         activePlayer = players.get(0);
         
+        userInput.askHint();
         
         GameLayout game = new GameLayout(nOfPlayers);
         ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
