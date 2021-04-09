@@ -5,10 +5,12 @@
  */
 package huesandcuesproject;
 
-import GUI.CustomDialogs;
-import GUI.GameLayout;
+import GUI.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
@@ -44,7 +46,21 @@ public class Runner extends Application {
         }
         activePlayer = players.get(0);
         
+        
         GameLayout game = new GameLayout(nOfPlayers);
+        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
+        
+        List<List<ColorBlock>> shuffledArrayList = new ArrayList<>();
+        for (ColorBlock[] colorIndex : shuffleBlocks) {
+            List<ColorBlock> list = new ArrayList<>();
+            for (ColorBlock i : colorIndex) {
+                list.add(i);
+            }
+            shuffledArrayList.add(list);
+        }
+        //Create cards, index increases by 4:
+        Card tempCard = new Card(shuffledArrayList);
+        
         
         Scene scene = new Scene(game, length, height);
         

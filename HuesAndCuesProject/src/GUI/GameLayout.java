@@ -24,14 +24,20 @@ public class GameLayout extends BorderPane{
     
     private final double length = 100;
     private final double height = 100;
+    public ScoreBoard scoreBoard;
+    public Board board;
     
     public GameLayout(int nPlayers) throws Exception{
         this.setSize();
         
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
-        mainGp.add(new ScoreBoard(), 0, 0);
-        mainGp.add(new Board(nPlayers), 0, 1);
+        
+        this.setScoreBoard();
+        this.setBoard(nPlayers);
+
+        mainGp.add(this.getScoreBoard(), 0, 0);
+        mainGp.add(this.getBoard(), 0, 1);
         //Board gameBoard = new Board();
         //this.setCenter(gameBoard);
         //ScoreBoard scoreBoard = new ScoreBoard();
@@ -45,4 +51,24 @@ public class GameLayout extends BorderPane{
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
+
+    public ScoreBoard getScoreBoard() {
+        return scoreBoard;
+    }
+
+    public void setScoreBoard() throws Exception {
+        this.scoreBoard = new ScoreBoard();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(int nPlayers) throws Exception {
+        this.board = new Board(nPlayers);
+    }
+    
+    
+    
 }
+

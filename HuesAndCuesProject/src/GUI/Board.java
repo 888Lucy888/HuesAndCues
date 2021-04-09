@@ -85,5 +85,15 @@ public class Board extends BorderPane{
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
+
+    public ColorBlock[][] getBlocks() {
+        return blocks;
+    }
+
+    private void setBlocks(ColorBlock[][] blocks) {
+        this.blocks = blocks;
+    }
+    
+    
     
 }
