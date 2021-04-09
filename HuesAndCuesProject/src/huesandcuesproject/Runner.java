@@ -5,19 +5,16 @@
  */
 package huesandcuesproject;
 
-import GUI.ColorBlock;
-import GUI.Board;
+import GUI.*;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,54 +22,64 @@ import javax.swing.JOptionPane;
  */
 public class Runner extends Application {
     
-    JFrame frame;
-    Player activePlayer;
+    private final double length = 640;
+    private final double height = 620;
+    public static int nOfPlayers;
+    public static int iPlayers = 0;
+    public static Player activePlayer;
+    public static ArrayList<Player> players = new ArrayList<Player>();
     
     @Override
-    public void init(){
+    public void init() throws Exception{
+        
     }
     
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ArrayList<Player> players = new ArrayList<Player>();
-        frame = new JFrame();
-        int nOfPlayers;
-        do{
-            String numberOfPlayers = JOptionPane.showInputDialog(frame, "Enter number of players (3-10): ");
-            nOfPlayers = Integer.parseInt(numberOfPlayers);
-        }while(nOfPlayers>10 || nOfPlayers<3);
+        
+        CustomDialogs userInput = new CustomDialogs();
+        userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
-            String pName = JOptionPane.showInputDialog(frame, "Enter name: ");
-            String pEmail = JOptionPane.showInputDialog(frame, "Enter eMail: ");
-            Player player = new Player(pName, pEmail, Color.RED);
-            players.add(player);
+            userInput.createNewPlayer();
+            iPlayers++;
+            players.add(activePlayer);
         }
-        Board game = new Board();
-        ColorBlock btn = new ColorBlock("53251A");
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+        activePlayer = players.get(0);
+        
+        userInput.askHint();
+        
+        GameLayout game = new GameLayout(nOfPlayers);
+        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
+        
+        List<List<ColorBlock>> shuffledArrayList = new ArrayList<>();
+        for (ColorBlock[] colorIndex : shuffleBlocks) {
+            List<ColorBlock> list = new ArrayList<>();
+            for (ColorBlock i : colorIndex) {
+                list.add(i);
             }
-        });
+            shuffledArrayList.add(list);
+        }
+        //Create cards, index increases by 4:
+        Card tempCard = new Card(shuffledArrayList);
         
-        //StackPane root = new StackPane();
-        //root.getChildren().add(game);
         
-        Scene scene = new Scene(game, 300, 250);
+        Scene scene = new Scene(game, length, height);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        Scale scale = new Scale(1, 1);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        scene.getRoot().getTransforms().setAll(scale);
+        
     }
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
-        //MailSender.sendTo("crlvlz0215@gmail.com", "Test message by Carlos");
         launch(args);
     }
     

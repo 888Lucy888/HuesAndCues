@@ -5,12 +5,7 @@
  */
 package GUI;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -18,14 +13,17 @@ import javafx.scene.paint.Color;
  */
 public class ColorBlock extends Button{
     private String color;
-    private int height;
-    private int length;
+    private final int height = 20;
+    private final int length = 20;
     private String position;
+    
+    private ColorBlock(){  
+    }
     
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
-        this.setSize();
-        this.setStyle("-fx-background-color:#" + this.getColor() + ";");
+        this.setSize(length, height);
+        this.setStyle("-fx-background-color:#" + this.getColor() + ";-fx-border-color: black");
     }
     
     private void setColor(String color){
@@ -36,9 +34,9 @@ public class ColorBlock extends Button{
         return this.color;
     }
     
-    private void setSize(){
-        //.setMinSize(height, length);
-        //.setMaxSize(height, length);
+    protected void setSize(int length, int height){
+        this.setMinSize(length, height);
+        this.setMaxSize(length, height);
     }
     
     public void setPosition(String letter, String number){
