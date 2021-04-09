@@ -17,8 +17,11 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 /**
@@ -40,6 +43,7 @@ public class CustomDialogs{
                 ChoiceDialog<String> chooseNumberOfUsers;
                 chooseNumberOfUsers = new ChoiceDialog<String>(dialogValues.get(0), dialogValues);
                 chooseNumberOfUsers.setHeaderText("Select number of players");
+                chooseNumberOfUsers.initStyle(StageStyle.UNDECORATED);
                 Optional <String> result = chooseNumberOfUsers.showAndWait();
                 if(result.isPresent())
                     Runner.nOfPlayers = Integer.parseInt(result.get());
@@ -62,6 +66,7 @@ public class CustomDialogs{
 
                 ButtonType buttonTypeOk = new ButtonType("Listo", ButtonData.OK_DONE);
                 dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+                dialog.initStyle(StageStyle.UNDECORATED);
 
                 dialog.setResultConverter(new Callback <ButtonType, Player>(){
                     @Override
@@ -114,6 +119,34 @@ public class CustomDialogs{
                 if(result.isPresent()){
                     Runner.activePlayer = result.get();
                 }
+    }
+    
+    public void askHint(){
+        TextInputDialog dialog = new TextInputDialog();
+        
+        dialog.initStyle(StageStyle.UNDECORATED);
+        
+        dialog.setTitle("Hint");
+        dialog.setHeaderText("Enter hint");
+        
+//        VBox vbHint = new VBox();
+//        
+//        Label lblText = new Label("Colors sent by mail");
+//        TextField txtHint = new TextField();
+//        
+//        vbHint.getChildren().add(lblText);
+//        vbHint.getChildren().add(txtHint);
+//        
+//        dialog.getDialogPane().setContent(vbHint);
+        
+        Optional <String> result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            Label label = new Label();
+            label.setText(result.get());
+            GameLayout.setLBLHINT(label);
+        }
+        
     }
     
 }
