@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.layout.HBox;
 
 /**
@@ -12,27 +14,31 @@ import javafx.scene.layout.HBox;
  * @author Lucy
  */
 public class Card extends HBox{
-    private ColorBlock[] colors;
     
-    public Card(){
-        
+    private static int index = 0;
+    private static int indexj = 0;
+    private ArrayList<String> colors;
+    
+    public Card(List<List<ColorBlock>> shuffledColors){
+        this.setColors();
+        for(int i=0;i<4;i++){
+            String tempColor = shuffledColors.get(indexj).get(index).getColor();
+            colors.add(tempColor);
+            if(index==30){
+                indexj++;
+                index = 0;
+            }else{
+                index++;
+            }
+        }
+
+        this.toHTML();
     }
 
-    public ColorBlock[] getColors() {
-        return colors;
-    }
-
-    
-    //????????????????????????????????????????????
-    public void setColors(ColorBlock[] colors) {
-        this.colors = new ColorBlock[4];
-    }
-    //????????????????????????????????????????????
-    
     
     //Overrides normal toString to point out the colors...
     //Should change to show position...
-    @Override
+    /*@Override
     public String toString(){
         String text = "";
         text += colors[0].getPosition() + " ";
@@ -41,6 +47,7 @@ public class Card extends HBox{
         text += colors[3].getPosition() + " ";
         return text;
     }
+    */
     
     public String toHTML(){
         String html;
@@ -48,10 +55,10 @@ public class Card extends HBox{
                 + "<head> <style> "
                 + "#grid { display: grid; grid-template-columns: auto auto;"
                 + "grid-gap: 15px; background-color: #000000; padding: 15px;}"
-                + "#block1 { background-color: #" + colors[0].getColor() + ";}"
-                + "#block2 { background-color: #" + colors[1].getColor() + ";}"
-                + "#block3 { background-color: #" + colors[2].getColor() + ";}"
-                + "#block4 { background-color: #" + colors[3].getColor() + ";}"
+                + "#block1 { background-color: #" + colors.get(0) + ";}"
+                + "#block2 { background-color: #" + colors.get(1) + ";}"
+                + "#block3 { background-color: #" + colors.get(2) + ";}"
+                + "#block4 { background-color: #" + colors.get(3) + ";}"
                 + ".colored {width: 50px; height: 50px;} </style></head>"
                 + "<body><div id = 'grid'><div class = 'colored' id = 'block1'>"
                 + "<div class = 'colored' id = 'block2'>"
@@ -60,5 +67,25 @@ public class Card extends HBox{
                 + "</div></div></body></html>";
         return html;
     }
+
+    public static int getIndex() {
+        return index;
+    }
+
+    public static void setIndex(int index) {
+        Card.index = index;
+    }
+
+    public ArrayList<String> getColors() {
+        return colors;
+    }
+
+    private void setColors() {
+        this.colors = new ArrayList();
+    }
+    
+    
+    
+    
     
 }

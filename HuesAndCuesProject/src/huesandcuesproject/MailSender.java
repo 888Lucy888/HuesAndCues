@@ -5,12 +5,9 @@
  */
 package huesandcuesproject;
 
-import GUI.Card;
-import GUI.ColorBlock;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Node;
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

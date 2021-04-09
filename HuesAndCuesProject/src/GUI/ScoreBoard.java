@@ -6,8 +6,8 @@
 package GUI;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -17,10 +17,10 @@ import javafx.scene.layout.GridPane;
  */
 public class ScoreBoard extends BorderPane{
     
-    private final int height = 100;
-    private final int length = 900;
-    private final int blockHeight = 50;
-    private final int blockLength = 20;
+    private final int height = 50;
+    private final int length = 600;
+    private final int blockHeight = 40;
+    private final int blockLength = 15;
     
     public ScoreBoard() throws Exception{
         
@@ -40,6 +40,7 @@ public class ScoreBoard extends BorderPane{
             }
             j++;
         }
+        scoreGp.setAlignment(Pos.BOTTOM_CENTER);
         
         this.setCenter(scoreGp);   
     }

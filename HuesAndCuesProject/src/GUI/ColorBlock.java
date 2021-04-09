@@ -5,14 +5,7 @@
  */
 package GUI;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStrokeStyle;
 
 /**
  *
@@ -20,12 +13,11 @@ import javafx.scene.layout.BorderStrokeStyle;
  */
 public class ColorBlock extends Button{
     private String color;
-    private final int height = 25;
-    private final int length = 25;
+    private final int height = 20;
+    private final int length = 20;
     private String position;
     
-    private ColorBlock(){
-        
+    private ColorBlock(){  
     }
     
     public ColorBlock(String color) throws Exception{
