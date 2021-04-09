@@ -5,23 +5,13 @@
  */
 package huesandcuesproject;
 
-import GUI.ColorBlock;
-import GUI.Board;
 import GUI.CustomDialogs;
 import GUI.GameLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 /**
@@ -30,8 +20,8 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
-    private double width;
-    private double height;
+    private final double length = 640;
+    private final double height = 620;
     public static int nOfPlayers;
     public static int iPlayers = 0;
     public static Player activePlayer;
@@ -45,9 +35,6 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
-        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        width = screenSize.getWidth() / 1.8;
-        height = screenSize.getHeight() / 1.5;
         CustomDialogs userInput = new CustomDialogs();
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
@@ -59,11 +46,17 @@ public class Runner extends Application {
         
         GameLayout game = new GameLayout(nOfPlayers);
         
-        Scene scene = new Scene(game, width, height);
+        Scene scene = new Scene(game, length, height);
         
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        Scale scale = new Scale(1, 1);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        scene.getRoot().getTransforms().setAll(scale);
+        
     }
     
     /**
