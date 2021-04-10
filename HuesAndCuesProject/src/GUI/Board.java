@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
 import java.awt.Dimension;
 import java.io.BufferedReader;
@@ -30,7 +31,6 @@ public class Board extends BorderPane{
     
     public static ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
-    private int iPlayers = 0;
     private final int height = 360;
     private final int length = 640;
     public int iRounds = 0;
@@ -58,7 +58,7 @@ public class Board extends BorderPane{
                 tri.setFill(Color.BLACK);
                 
                 //Creates a ColorBlock
-                blocks [j] [i] = new ColorBlock(seperator[j]);
+                blocks [j] [i] = new ColorBlock(seperator[j], i, j);
                 
                 //Adds position to the ColorBlock
                 String letter = this.getLetterForNumber(i);
@@ -69,43 +69,63 @@ public class Board extends BorderPane{
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
                 
+                final int y = j;
+                final int x = i;
                 //Sets action for color block on click
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
+                        //Checks if the player who gave the hint is the current player
                         if(Runner.activePlayer.getIsLeader()){
+                            //Updates to 0 for next round
+                            iRounds = 0;
+                            //TODO add scoring
                             System.out.println("You selected the correct color");
-                            iPlayers++;
-                            if(iPlayers == nPlayers){
-                                iPlayers = 0;
-                                iRounds++;
+                            //Changes the hint-giver to the next player
+                            Runner.players.get(Runner.iPlayers).setIsLeader(false);
+                            Runner.iPlayers++;
+                            if(Runner.iPlayers == nPlayers){
+                                Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(iPlayers);
+                            Runner.players.get(Runner.iPlayers).setIsLeader(true);
+                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            //Asks the hint-giver for their first hint
+                            Runner.game.changeHint(Runner.askFirstHint());
                         }
+                        //Used to put the pieces of the other players
                         else{
+                            setAsSelected(y, x);
+                            //Sets a triangle 
                             tri.setFill(Runner.activePlayer.getColor());
                             tri.setVisible(true);
-                            iPlayers++;
-                            if(iPlayers == nPlayers){
-                                iPlayers = 0;
-                                iRounds++;
+                            //Changes the current player
+                            Runner.iPlayers++;
+                            //Used if the max value of the array is reached
+                            if(Runner.iPlayers == nPlayers){
+                                Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(iPlayers);
-                            if(Runner.activePlayer.getIsLeader()){
+                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            //If the current player is detected as the hint-giver
+                            //Asks for a hint without need of pressing anything
+                            if(Runner.activePlayer.getIsLeader() && iRounds == 0){
+                                //Updates the round pointing that a full round has passed
+                                iRounds++;
                                 try {
+                                    //Asks if they want to give another hint
                                     Runner.userInput.askForAnotherHint();
                                 } catch (Exception ex) {
                                     Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                                //If yes they give another hint and the hint is updated
                                 if(Runner.userInput.getHintConfirm()){
-                                    Runner.userInput.askHint();
-                                    iPlayers++;
-                                    if(iPlayers == nPlayers){
-                                        iPlayers = 0;
-                                        iRounds++;
+                                    Runner.game.changeHint(Runner.askAnotherHint());
+                                    Runner.iPlayers++;
+                                    if(Runner.iPlayers == nPlayers){
+                                        Runner.iPlayers = 0;
                                     }
-                                    Runner.activePlayer = Runner.players.get(iPlayers);
+                                    Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                                 }
+                                //Else it's ignored and he can seect the correct block
                             }
                         }
                     }
@@ -192,5 +212,20 @@ public class Board extends BorderPane{
         return Character.toString(alphabet[i]);
     }
     
+    private int scoreBlocks(ColorBlock correct, ColorBlock guessed){
+        int score = 0;
+        
+        return score;
+    }
+    
+    private void setAsSelected(int j, int i){
+        blocks [j] [i].setAsSelected();
+        blocks [j] [i].setSelectedBy();
+    }
+    
+    private void clearSelected(int j, int i){
+        blocks [j] [i].clearSelected();
+        blocks [j] [i].clearSelectedBy();
+    }
     
 }

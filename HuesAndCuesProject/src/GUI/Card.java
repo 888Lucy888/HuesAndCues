@@ -34,8 +34,6 @@ public class Card extends HBox{
                 index++;
             }
         }
-
-        this.toHTML();
     }
 
     
