@@ -25,7 +25,7 @@ import javafx.scene.transform.Scale;
  */
 public class GameLayout extends BorderPane{
     
-    private static Label hint;
+    private Label hint;
     
     //public GameLayout(int nPlayers) throws Exception{
         
@@ -40,6 +40,7 @@ public class GameLayout extends BorderPane{
     
     public GameLayout(int nPlayers) throws Exception{
         this.setSize();
+        this.setHint();
         
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
@@ -95,12 +96,16 @@ public class GameLayout extends BorderPane{
         this.setMaxSize(length, height);
     }
     
-    public static void setLBLHINT(Label label){
-        hint = label;
+    public void setHint(){
+        this.hint = new Label();
     }
     
-    public static Label getLBLHINT(){
-        return hint;
+    public void changeHint(String hintText){
+        this.hint.setText("HINT: "+hintText);
+    }
+    
+    public Label getHint(){
+        return this.hint;
     }
 
     public ScoreBoard getScoreBoard() {

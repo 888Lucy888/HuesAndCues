@@ -120,13 +120,13 @@ public class CustomDialogs{
                 }
     }
     
-    public void askHint(){
+    public String askHint(){
         TextInputDialog dialog = new TextInputDialog();
         
         dialog.initStyle(StageStyle.UNDECORATED);
         
         dialog.setTitle("Hint");
-        dialog.setHeaderText("Enter a one word hint");
+        dialog.setHeaderText("CHECK YOUR EMAIL FOR YOUR CARD... After you have chosen a color, enter a one word hint:");
         
 //        VBox vbHint = new VBox();
 //        
@@ -141,9 +141,9 @@ public class CustomDialogs{
         Optional <String> result = dialog.showAndWait();
         
         if(result.isPresent()){
-            Label label = new Label();
-            label.setText("HINT: "+result.get());
-            GameLayout.setLBLHINT(label);
+            return(result.get());
+        }else{
+            return ("");
         }
         
     }
