@@ -61,6 +61,8 @@ public class Runner extends Application {
         }
         //Create cards, index increases by 4:
         Card tempCard = new Card(shuffledArrayList);
+        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
         
         
         Scene scene = new Scene(game, length, height);

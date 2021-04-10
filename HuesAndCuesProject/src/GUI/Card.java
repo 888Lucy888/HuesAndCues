@@ -51,20 +51,41 @@ public class Card extends HBox{
     
     public String toHTML(){
         String html;
-        html = "<html>"
+        html = ""
+            + "<html>"
                 + "<head> <style> "
-                + "#grid { display: grid; grid-template-columns: auto auto;"
-                + "grid-gap: 15px; background-color: #000000; padding: 15px;}"
+                + "#grid {"
+                    + "background-color: black;"
+                    + "width: 200px;"
+                    + "height: 200px;"
+                    + "padding: 15px;"
+                + "}"
+                +".tableRow{" +
+                    "width: 200px;" +
+                    "height: 100px;" +
+                "}" +
+                ".tableData{\n" +
+                    "height: 100px;\n" +
+                    "width: 100px;\n" +
+                "}"
                 + "#block1 { background-color: #" + colors.get(0) + ";}"
                 + "#block2 { background-color: #" + colors.get(1) + ";}"
                 + "#block3 { background-color: #" + colors.get(2) + ";}"
                 + "#block4 { background-color: #" + colors.get(3) + ";}"
                 + ".colored {width: 50px; height: 50px;} </style></head>"
-                + "<body><div id = 'grid'><div class = 'colored' id = 'block1'>"
-                + "<div class = 'colored' id = 'block2'>"
-                + "<div class = 'colored' id = 'block3'>"
-                + "<div class = 'colored' id = 'block4'>"
-                + "</div></div></body></html>";
+                + "<body>"
+                    + "<table id = \"grid\">"
+                        + "<tr class = \"tableRow\">"
+                            + "<td class = \"tableData\"><div class = \"colored\" id = \"block1\"></div></td>"
+                            + "<td class = \"tableData\"><div class = \"colored\" id = \"block2\"></div></td>"
+                        + "</tr>"
+                        + "<tr class = \"tableRow\">"
+                            + "<td class = \"tableData\"><div class = \"colored\" id = \"block3\"></div></td>"
+                            + "<td class = \"tableData\"><div class = \"colored\" id = \"block4\"></div></td>"
+                        + "</tr>"
+                    +"</table>"
+                + "</body>"
+            + "</html>";
         return html;
     }
 
