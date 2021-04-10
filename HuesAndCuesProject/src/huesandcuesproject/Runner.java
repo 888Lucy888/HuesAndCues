@@ -67,6 +67,7 @@ public class Runner extends Application {
         
         Scene scene = new Scene(game, length, height);
         
+        
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);
         primaryStage.show();

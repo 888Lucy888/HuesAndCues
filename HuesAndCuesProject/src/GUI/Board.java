@@ -52,7 +52,15 @@ public class Board extends BorderPane{
                    20.0, 0.0
                 });
                 tri.setFill(Color.BLACK);
+                
+                //Creates a ColorBlock
                 blocks [j] [i] = new ColorBlock(seperator[j]);
+                
+                //Adds position to the ColorBlock
+                String letter = this.getCharForNumber(i);
+                String number = String.valueOf(j+1);
+                blocks[j][i].setPosition(letter, number);
+                
                 sp.getChildren().add(blocks [j] [i] );
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
@@ -72,6 +80,8 @@ public class Board extends BorderPane{
             }
             i++;
         }
+        //Testing positions
+        System.out.println(this.blocks[1][1].getPosition());
         
         gp.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(gp);
@@ -94,6 +104,13 @@ public class Board extends BorderPane{
         this.blocks = blocks;
     }
     
+    private String getCharForNumber(int i) {
+    char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+    if (i > 25) {
+        return null;
+    }
+    return Character.toString(alphabet[i]);
+}
     
     
 }
