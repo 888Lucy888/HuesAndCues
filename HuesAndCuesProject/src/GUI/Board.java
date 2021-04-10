@@ -80,8 +80,7 @@ public class Board extends BorderPane{
             }
             i++;
         }
-        //Testing positions
-        System.out.println(this.blocks[1][1].getPosition());
+
         
         gp.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(gp);
@@ -106,12 +105,12 @@ public class Board extends BorderPane{
     }
     
     private String getCharForNumber(int i) {
-    char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-    if (i > 25) {
-        return null;
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        if (i > 25) {
+            return null;
+        }
+        return Character.toString(alphabet[i]);
     }
-    return Character.toString(alphabet[i]);
-}
     
     
 }
