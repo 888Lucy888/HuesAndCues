@@ -27,8 +27,8 @@ public class GameLayout extends BorderPane{
     
     private Label hint;
   
-    private final double length = 800;
-    private final double height = 620;
+    private final double LENGTH = 800;
+    private final double HEIGHT = 620;
     public ScoreBoard scoreBoard;
     public Board board;
     
@@ -66,8 +66,8 @@ public class GameLayout extends BorderPane{
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
     
 

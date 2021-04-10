@@ -21,10 +21,10 @@ import javafx.scene.layout.GridPane;
  */
 public class ScoreBoard extends BorderPane{
     
-    private final int height = 100;
-    private final int length = 600;
-    private final int blockHeight = 50;
-    private final int blockLength = 20;
+    private final int HEIGHT = 100;
+    private final int LENGTH = 600;
+    private final int BLOCKHEIGHT = 50;
+    private final int BLOCKLENGTH = 20;
     
     public ScoreBoard() throws Exception{
         
@@ -41,7 +41,7 @@ public class ScoreBoard extends BorderPane{
             String[] tempArray = line.split(",");
             for(int i=0; i<25; i++){
                 ColorBlock tempColorBlock = new ColorBlock(tempArray[i]);
-                tempColorBlock.setSize(blockLength, blockHeight);
+                tempColorBlock.setSize(BLOCKLENGTH, BLOCKHEIGHT);
                 scoreGp.add(tempColorBlock, i, j);
             }
             j++;
@@ -85,7 +85,7 @@ public class ScoreBoard extends BorderPane{
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
 }

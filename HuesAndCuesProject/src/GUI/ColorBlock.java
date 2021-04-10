@@ -13,8 +13,8 @@ import javafx.scene.control.Button;
  */
 public class ColorBlock extends Button{
     private String color;
-    private final int height = 20;
-    private final int length = 20;
+    private final int HEIGHT = 20;
+    private final int LENGTH = 20;
     private String position;
     
     private ColorBlock(){  
@@ -22,7 +22,7 @@ public class ColorBlock extends Button{
     
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
-        this.setSize(length, height);
+        this.setSize(LENGTH, HEIGHT);
         this.setStyle("-fx-background-color: #" + this.getColor() + "; -fx-border-color: black");
     }
     

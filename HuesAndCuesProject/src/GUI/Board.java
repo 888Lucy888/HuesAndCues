@@ -31,8 +31,8 @@ public class Board extends BorderPane{
     public static ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
-    private final int height = 360;
-    private final int length = 640;
+    private final int HEIGHT = 360;
+    private final int LENGTH = 640;
     public int iRounds = 0;
     
     public Board (int nPlayers) throws Exception{
@@ -172,8 +172,8 @@ public class Board extends BorderPane{
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
 
     public ColorBlock[][] getBlocks() {

@@ -21,8 +21,8 @@ import javafx.scene.paint.Color;
  * @author Lucy
  */
 public class Winner extends BorderPane {
-    private final int height = 350;
-    private final int length = 450;
+    private final int HEIGHT = 350;
+    private final int LENGTH = 450;
     public Winner(Player winner){
         
         //Creating messages
@@ -43,8 +43,8 @@ public class Winner extends BorderPane {
         name.setAlignment(Pos.CENTER);
         score.setAlignment(Pos.CENTER);
         winnerMsg.setAlignment(Pos.CENTER);
-        winnerMsg.setMaxSize(length, height);
-        winnerMsg.setMinSize(length, height);
+        winnerMsg.setMaxSize(LENGTH, HEIGHT);
+        winnerMsg.setMinSize(LENGTH, HEIGHT);
         
         //Adding messages
         winnerMsg.add(congrats, 0, 0);

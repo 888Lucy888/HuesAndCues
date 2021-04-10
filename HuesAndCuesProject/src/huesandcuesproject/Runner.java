@@ -26,8 +26,8 @@ import javafx.stage.Stage;
 public class Runner extends Application {
     
     //Configures GUI size
-    private final double length = 800;
-    private final double height = 620;
+    private final double LENGTH = 800;
+    private final double HEIGHT = 620;
     
     //Used to store the players
     public static int nOfPlayers;
@@ -66,7 +66,7 @@ public class Runner extends Application {
         
         //Setting up Board Game
         GameLayout game = new GameLayout(nOfPlayers);
-        Scene mainScene = new Scene(game, length, height);
+        Scene mainScene = new Scene(game, LENGTH, HEIGHT);
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(mainScene);
         primaryStage.show();
