@@ -18,12 +18,16 @@ public class Card extends HBox{
     private static int index = 0;
     private static int indexj = 0;
     private ArrayList<String> colors;
+    private ArrayList<String> positions;
     
     public Card(List<ColorBlock> shuffledColors){
         this.setColors();
+        this.setPositions();
         for(int i=0;i<4;i++){
             String tempColor = shuffledColors.get(index).getColor();
+            String tempPos = shuffledColors.get(index).getPosition();
             colors.add(tempColor);
+            positions.add(tempPos);
             if(index==99){
                 index=0;
             }else{
@@ -71,16 +75,25 @@ public class Card extends HBox{
                 + "#block2 { background-color: #" + colors.get(1) + ";}"
                 + "#block3 { background-color: #" + colors.get(2) + ";}"
                 + "#block4 { background-color: #" + colors.get(3) + ";}"
-                + ".colored {width: 50px; height: 50px;} </style></head>"
+                + ".colored {width: 50px; height: 50px;}"
+                + ".data { color: white; font-weight: bold; text-align: center;}  </style></head>"
                 + "<body>"
                     + "<table id = \"grid\">"
                         + "<tr class = \"tableRow\">"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block1\"></div></td>"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block2\"></div></td>"
                         + "</tr>"
+                        + "<tr class = \"Position\">"
+                            + "<td class = \"data\"><p>" + positions.get(0) + "</p></td>"
+                            + "<td class = \"data\"><p>" + positions.get(1) + "</p></td>"
+                        + "</tr>"
                         + "<tr class = \"tableRow\">"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block3\"></div></td>"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block4\"></div></td>"
+                        + "</tr>"
+                        + "<tr class = \"Position\">"
+                            + "<td class = \"data\"><p>" + positions.get(2) + "</p></td>"
+                            + "<td class = \"data\"><p>" + positions.get(3) + "</p></td>"
                         + "</tr>"
                     +"</table>"
                 + "</body>"
@@ -102,6 +115,10 @@ public class Card extends HBox{
 
     private void setColors() {
         this.colors = new ArrayList();
+    }
+    
+    private void setPositions(){
+        this.positions = new ArrayList();
     }
     
     

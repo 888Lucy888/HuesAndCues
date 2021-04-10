@@ -62,7 +62,7 @@ public class Runner extends Application {
             }
         }
         Collections.shuffle(shuffledArrayList);
-        
+      
         //Create cards, index increases by 4:
         Card tempCard = new Card(shuffledArrayList);
         //MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());

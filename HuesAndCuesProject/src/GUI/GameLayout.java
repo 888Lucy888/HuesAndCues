@@ -55,6 +55,8 @@ public class GameLayout extends BorderPane{
         //ScoreBoard scoreBoard = new ScoreBoard();
         //this.setTop(scoreBoard);
         this.setCenter(mainGp);
+        //this.setBottom(LBLHINT);
+        //LBLHINT.setVisible(true);
         
         hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");;
         hint.setVisible(true);
@@ -65,7 +67,7 @@ public class GameLayout extends BorderPane{
         hintGrid.add(hint,0,0);
         hintGrid.setAlignment(Pos.CENTER);
         this.setBottom(hintGrid);
-        
+      
         mainGp.setMinSize(660, 500);
         mainGp.setMaxSize(660, 500);
         
