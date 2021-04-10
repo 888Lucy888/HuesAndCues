@@ -12,6 +12,7 @@ import java.io.FileReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -28,8 +29,8 @@ public class Board extends BorderPane{
     private ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
-    private final int height = 380;
-    private final int length = 600;
+    private final int height = 360;
+    private final int length = 640;
     
     public Board (int nPlayers) throws Exception{
         
@@ -52,8 +53,16 @@ public class Board extends BorderPane{
                    20.0, 0.0
                 });
                 tri.setFill(Color.BLACK);
+                
+                //Creates a ColorBlock
                 blocks [j] [i] = new ColorBlock(seperator[j]);
-                sp.getChildren().add(blocks [j] [i] );
+                
+                //Adds position to the ColorBlock
+                String letter = this.getLetterForNumber(i);
+                String number = String.valueOf(j+1);
+                blocks[j][i].setPosition(letter, number);
+                
+                sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
@@ -67,14 +76,61 @@ public class Board extends BorderPane{
                         Runner.activePlayer = Runner.players.get(iPlayers);
                     }
                 });
-                GridPane.setConstraints(sp, j, i);
+                GridPane.setConstraints(sp, j+1, i+1);
                 gp.getChildren().add(sp);
             }
             i++;
         }
         
+        //Add letters
+        for(int cont=0; cont<16; cont++){
+            String letter = this.getLetterForNumber(cont);
+            Label tempLetter = new Label(letter);
+            tempLetter.setAlignment(Pos.CENTER);
+            tempLetter.setMaxSize(20, 20);
+            tempLetter.setMinSize(20, 20);
+            tempLetter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempLetter, 0, cont+1);
+            gp.getChildren().add(tempLetter);
+        }
+        for(int cont=0; cont<16; cont++){
+            String letter = this.getLetterForNumber(cont);
+            Label tempLetter = new Label(letter);
+            tempLetter.setAlignment(Pos.CENTER);
+            tempLetter.setMaxSize(20, 20);
+            tempLetter.setMinSize(20, 20);
+            tempLetter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempLetter, 31, cont+1);
+            gp.getChildren().add(tempLetter);
+        }
+        
+        //Add numbers
+        for(int cont=1; cont<31; cont++){
+            String number = String.valueOf(cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.CENTER);
+            tempNumber.setMaxSize(20, 20);
+            tempNumber.setMinSize(20, 20);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont, 0);
+            gp.getChildren().add(tempNumber);
+        }
+        for(int cont=1; cont<31; cont++){
+            String number = String.valueOf(cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.CENTER);
+            tempNumber.setMaxSize(20, 20);
+            tempNumber.setMinSize(20, 20);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont, 17);
+            gp.getChildren().add(tempNumber);
+        }
+        
+        gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
-        this.setBottom(gp);
+        
+        this.setCenter(gp);
+        
         
         //while(!br.readLine().isEmpty()){
             //String colorCodes[] = br.readLine().split(" ");
@@ -94,6 +150,13 @@ public class Board extends BorderPane{
         this.blocks = blocks;
     }
     
+    private String getLetterForNumber(int i) {
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        if (i > 25) {
+            return null;
+        }
+        return Character.toString(alphabet[i]);
+    }
     
     
 }

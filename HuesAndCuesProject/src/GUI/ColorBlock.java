@@ -23,7 +23,7 @@ public class ColorBlock extends Button{
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
         this.setSize(length, height);
-        this.setStyle("-fx-background-color:#" + this.getColor() + ";-fx-border-color: black");
+        this.setStyle("-fx-background-color: #" + this.getColor() + "; -fx-border-color: black");
     }
     
     private void setColor(String color){

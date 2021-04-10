@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
-    private final double length = 640;
+    private final double length = 800;
     private final double height = 620;
     public static int nOfPlayers;
     public static int iPlayers = 0;
@@ -49,23 +49,24 @@ public class Runner extends Application {
         userInput.askHint();
         
         GameLayout game = new GameLayout(nOfPlayers);
-        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
         
-        List<List<ColorBlock>> shuffledArrayList = new ArrayList<>();
+        //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
+        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
+        List<ColorBlock> shuffledArrayList = new ArrayList<>();
         for (ColorBlock[] colorIndex : shuffleBlocks) {
-            List<ColorBlock> list = new ArrayList<>();
             for (ColorBlock i : colorIndex) {
-                list.add(i);
+                shuffledArrayList.add(i);
             }
-            shuffledArrayList.add(list);
         }
+        Collections.shuffle(shuffledArrayList);
         //Create cards, index increases by 4:
         Card tempCard = new Card(shuffledArrayList);
-        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+        MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
         MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
         
         
         Scene scene = new Scene(game, length, height);
+        
         
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);

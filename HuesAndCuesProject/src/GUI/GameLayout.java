@@ -14,6 +14,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
@@ -46,7 +48,8 @@ public class GameLayout extends BorderPane{
         this.setBoard(nPlayers);
 
         mainGp.add(this.getScoreBoard(), 0, 0);
-        mainGp.add(this.getBoard(), 0, 1);
+        mainGp.add(new Label(), 0, 1);
+        mainGp.add(this.getBoard(), 0, 2);
         //Board gameBoard = new Board();
         //this.setCenter(gameBoard);
         //ScoreBoard scoreBoard = new ScoreBoard();
@@ -54,8 +57,27 @@ public class GameLayout extends BorderPane{
         this.setCenter(mainGp);
         this.setBottom(LBLHINT);
         LBLHINT.setVisible(true);
-        this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         
+        mainGp.setMinSize(660, 500);
+        mainGp.setMaxSize(660, 500);
+        
+        //Adding color;
+        mainGp.setStyle("-fx-background-color: black");
+        this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        /*
+        VBox numbers = new VBox();
+        HBox letters = new HBox();
+        for(int i=0; i<25; i++){
+            String letterString = this.getCharForNumber(i);
+            Label letter = new Label(letterString);
+            letter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
+            letters.getChildren().add(letter);
+        }
+        letters.setSpacing(16);
+        letters.setAlignment(Pos.CENTER);
+        
+        mainGp.add(letters, 0, 1);
+        */
     }
     
     private void setSize(){
@@ -85,7 +107,6 @@ public class GameLayout extends BorderPane{
 
     public void setBoard(int nPlayers) throws Exception {
         this.board = new Board(nPlayers);
-    }
-    
+    }  
 }
 
