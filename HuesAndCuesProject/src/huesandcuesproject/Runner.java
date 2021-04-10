@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -22,12 +24,18 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
+    //Configures GUI size
     private final double length = 800;
     private final double height = 620;
+    
+    //Used to store the players
     public static int nOfPlayers;
     public static int iPlayers = 0;
     public static Player activePlayer;
     public static ArrayList<Player> players = new ArrayList<Player>();
+    
+    //Recieves basic user I/O
+    public static CustomDialogs userInput;
     
     @Override
     public void init() throws Exception{
@@ -38,7 +46,8 @@ public class Runner extends Application {
     public void start(Stage primaryStage) throws Exception{
         
         //Setting up number of Players and their information
-        CustomDialogs userInput = new CustomDialogs();
+        userInput = new CustomDialogs();
+      
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
             Player tempPlayer = userInput.createNewPlayer();
@@ -50,6 +59,9 @@ public class Runner extends Application {
             }
         }
         
+        for(int turn = 0; turn<nOfPlayers; turn++){}
+        activePlayer = players.get(0);
+        activePlayer.setIsLeader(true);
         
         //Setting up Board Game
         GameLayout game = new GameLayout(nOfPlayers);
@@ -57,6 +69,8 @@ public class Runner extends Application {
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        userInput.askHint();
         
         //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
         ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
@@ -67,7 +81,6 @@ public class Runner extends Application {
             }
         }
         Collections.shuffle(shuffledArrayList);
-      
 
         //Turns    
         for(int repeats = 0; repeats<3; repeats++){
@@ -85,9 +98,6 @@ public class Runner extends Application {
                 
             }
         }
-       
-        
-        
         
         
         

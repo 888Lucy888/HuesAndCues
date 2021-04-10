@@ -17,6 +17,9 @@ public class Player {
     private String email;
     private Color playerColor;
     
+    //Indicates if this player will choose a color or hint
+    private boolean isLeader;
+    
     private Player(){
         
     }
@@ -25,8 +28,9 @@ public class Player {
         this.setName(name);
         this.setEmail(email);
         this.setColor(color);
+        this.setIsLeader(false);
     }
-
+    
     public String getName() {
         return name;
     }
@@ -57,6 +61,14 @@ public class Player {
     
     public Color getColor(){
         return this.playerColor;
+    }
+    
+    public boolean getIsLeader(){
+        return this.isLeader;
+    }
+    
+    public void setIsLeader(boolean leader){
+        this.isLeader = leader;
     }
     
 }

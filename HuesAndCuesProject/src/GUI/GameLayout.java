@@ -26,12 +26,6 @@ import javafx.scene.transform.Scale;
 public class GameLayout extends BorderPane{
     
     private Label hint;
-    
-    //public GameLayout(int nPlayers) throws Exception{
-        
-        //Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        //double length = screenSize.getWidth() / 10;
-        //double height = screenSize.getHeight() / 10;
   
     private final double length = 800;
     private final double height = 620;
@@ -51,15 +45,9 @@ public class GameLayout extends BorderPane{
         mainGp.add(this.getScoreBoard(), 0, 0);
         mainGp.add(new Label(), 0, 1);
         mainGp.add(this.getBoard(), 0, 2);
-        //Board gameBoard = new Board();
-        //this.setCenter(gameBoard);
-        //ScoreBoard scoreBoard = new ScoreBoard();
-        //this.setTop(scoreBoard);
         this.setCenter(mainGp);
-        //this.setBottom(LBLHINT);
-        //LBLHINT.setVisible(true);
         
-        hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");;
+        hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");
         hint.setVisible(true);
         
         GridPane hintGrid = new GridPane();
@@ -75,20 +63,6 @@ public class GameLayout extends BorderPane{
         //Adding color;
         mainGp.setStyle("-fx-background-color: black");
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        /*
-        VBox numbers = new VBox();
-        HBox letters = new HBox();
-        for(int i=0; i<25; i++){
-            String letterString = this.getCharForNumber(i);
-            Label letter = new Label(letterString);
-            letter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
-            letters.getChildren().add(letter);
-        }
-        letters.setSpacing(16);
-        letters.setAlignment(Pos.CENTER);
-        
-        mainGp.add(letters, 0, 1);
-        */
     }
     
     private void setSize(){
@@ -96,6 +70,7 @@ public class GameLayout extends BorderPane{
         this.setMaxSize(length, height);
     }
     
+
     public void setHint(){
         this.hint = new Label();
     }
