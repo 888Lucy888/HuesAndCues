@@ -24,7 +24,7 @@ public class ScoreBoard extends BorderPane{
     private final int height = 100;
     private final int length = 600;
     private final int blockHeight = 50;
-    private final int blockLength = 18;
+    private final int blockLength = 20;
     
     public ScoreBoard() throws Exception{
         
@@ -77,8 +77,8 @@ public class ScoreBoard extends BorderPane{
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true); 
         GridPane imageLogo = new GridPane();
-        imageLogo.setAlignment(Pos.CENTER);
-        imageLogo.add(imageView,0,0);
+        imageLogo.setAlignment(Pos.TOP_RIGHT);
+        imageLogo.add(imageView, 0, 0);
         this.setRight(imageLogo);
     }
     

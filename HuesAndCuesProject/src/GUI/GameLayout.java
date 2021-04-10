@@ -58,8 +58,8 @@ public class GameLayout extends BorderPane{
         this.setBottom(LBLHINT);
         LBLHINT.setVisible(true);
         
-        mainGp.setMinSize(640, 480);
-        mainGp.setMaxSize(640, 480);
+        mainGp.setMinSize(660, 500);
+        mainGp.setMaxSize(660, 500);
         
         //Adding color;
         mainGp.setStyle("-fx-background-color: black");
