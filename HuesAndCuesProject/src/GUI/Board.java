@@ -9,6 +9,8 @@ import huesandcuesproject.Runner;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,11 +28,12 @@ import javafx.scene.transform.Scale;
  */
 public class Board extends BorderPane{
     
-    private ColorBlock [][] blocks = new ColorBlock [30] [16];
+    public static ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
     private final int height = 360;
     private final int length = 640;
+    public int iRounds = 0;
     
     public Board (int nPlayers) throws Exception{
         
@@ -65,15 +68,46 @@ public class Board extends BorderPane{
                 sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
+                
+                //Sets action for color block on click
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
-                        tri.setFill(Runner.activePlayer.getColor());
-                        tri.setVisible(true);
-                        iPlayers++;
-                        if(iPlayers == nPlayers)
-                            iPlayers = 0;
-                        Runner.activePlayer = Runner.players.get(iPlayers);
+                        if(Runner.activePlayer.getIsLeader()){
+                            System.out.println("You selected the correct color");
+                            iPlayers++;
+                            if(iPlayers == nPlayers){
+                                iPlayers = 0;
+                                iRounds++;
+                            }
+                            Runner.activePlayer = Runner.players.get(iPlayers);
+                        }
+                        else{
+                            tri.setFill(Runner.activePlayer.getColor());
+                            tri.setVisible(true);
+                            iPlayers++;
+                            if(iPlayers == nPlayers){
+                                iPlayers = 0;
+                                iRounds++;
+                            }
+                            Runner.activePlayer = Runner.players.get(iPlayers);
+                            if(Runner.activePlayer.getIsLeader()){
+                                try {
+                                    Runner.userInput.askForAnotherHint();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(Runner.userInput.getHintConfirm()){
+                                    Runner.userInput.askHint();
+                                    iPlayers++;
+                                    if(iPlayers == nPlayers){
+                                        iPlayers = 0;
+                                        iRounds++;
+                                    }
+                                    Runner.activePlayer = Runner.players.get(iPlayers);
+                                }
+                            }
+                        }
                     }
                 });
                 GridPane.setConstraints(sp, j+1, i+1);

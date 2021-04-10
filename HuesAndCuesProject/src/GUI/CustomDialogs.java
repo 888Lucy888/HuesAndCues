@@ -31,6 +31,8 @@ public class CustomDialogs{
     
     private int nPlayers;
     private Player player;
+    //Boolean that stores if they want another hint
+    private boolean confirm;
     
     public void getNumberOfUsers() throws Exception{
         final String [] values = { "3", "4", "5", "6", "7", "8", "9", "10" };
@@ -63,7 +65,7 @@ public class CustomDialogs{
                 Dialog<Player> dialog = new Dialog<>();
                 dialog.getDialogPane().setContent(gpUserDialog);
 
-                ButtonType buttonTypeOk = new ButtonType("Listo", ButtonData.OK_DONE);
+                ButtonType buttonTypeOk = new ButtonType("Done", ButtonData.OK_DONE);
                 dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
                 dialog.initStyle(StageStyle.UNDECORATED);
 
@@ -126,26 +128,55 @@ public class CustomDialogs{
         dialog.initStyle(StageStyle.UNDECORATED);
         
         dialog.setTitle("Hint");
-        dialog.setHeaderText("Enter hint");
-        
-//        VBox vbHint = new VBox();
-//        
-//        Label lblText = new Label("Colors sent by mail");
-//        TextField txtHint = new TextField();
-//        
-//        vbHint.getChildren().add(lblText);
-//        vbHint.getChildren().add(txtHint);
-//        
-//        dialog.getDialogPane().setContent(vbHint);
+        dialog.setHeaderText("Enter a one word hint");
         
         Optional <String> result = dialog.showAndWait();
         
         if(result.isPresent()){
             Label label = new Label();
-            label.setText(result.get());
+            label.setText("HINT: "+result.get());
             GameLayout.setLBLHINT(label);
         }
         
+    }
+    
+    public void askForAnotherHint() throws Exception{
+        Label lblHint = new Label("Want to give another hint?");
+        
+        Dialog<String> dialog = new Dialog<>();
+        
+        dialog.getDialogPane().setContent(lblHint);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        
+        ButtonType buttonTypeOk = new ButtonType("Yes", ButtonData.YES);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonData.NO);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeNo);
+        
+        dialog.setResultConverter(new Callback <ButtonType, String>(){
+            @Override
+            public String call(ButtonType b){
+                if(b == buttonTypeOk){
+                    return "YES";
+                }
+                return "NO";
+            }
+        });
+        
+        Optional <String> result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            if(result.get().equals("YES"))
+                confirm = true;
+            else
+                confirm = false;
+        }
+        
+    }
+    
+    public boolean getHintConfirm(){
+        return confirm;
     }
     
 }

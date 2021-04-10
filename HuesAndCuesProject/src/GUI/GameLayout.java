@@ -25,7 +25,7 @@ import javafx.scene.transform.Scale;
  */
 public class GameLayout extends BorderPane{
     
-    private static Label LBLHINT;
+    private static Label hint;
     
     //public GameLayout(int nPlayers) throws Exception{
         
@@ -33,8 +33,8 @@ public class GameLayout extends BorderPane{
         //double length = screenSize.getWidth() / 10;
         //double height = screenSize.getHeight() / 10;
   
-    private final double length = 100;
-    private final double height = 100;
+    private final double length = 800;
+    private final double height = 620;
     public ScoreBoard scoreBoard;
     public Board board;
     
@@ -50,34 +50,25 @@ public class GameLayout extends BorderPane{
         mainGp.add(this.getScoreBoard(), 0, 0);
         mainGp.add(new Label(), 0, 1);
         mainGp.add(this.getBoard(), 0, 2);
-        //Board gameBoard = new Board();
-        //this.setCenter(gameBoard);
-        //ScoreBoard scoreBoard = new ScoreBoard();
-        //this.setTop(scoreBoard);
         this.setCenter(mainGp);
-        this.setBottom(LBLHINT);
-        LBLHINT.setVisible(true);
         
+        hint = new Label();
+        GameLayout.hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");
+        GameLayout.hint.setVisible(true);
+        
+        GridPane hintGrid = new GridPane();
+        hintGrid.setMinSize(800, 40);
+        hintGrid.setMaxSize(800, 40);
+        hintGrid.add(hint,0,0);
+        hintGrid.setAlignment(Pos.CENTER);
+        this.setBottom(hintGrid);
+      
         mainGp.setMinSize(660, 500);
         mainGp.setMaxSize(660, 500);
         
         //Adding color;
         mainGp.setStyle("-fx-background-color: black");
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        /*
-        VBox numbers = new VBox();
-        HBox letters = new HBox();
-        for(int i=0; i<25; i++){
-            String letterString = this.getCharForNumber(i);
-            Label letter = new Label(letterString);
-            letter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
-            letters.getChildren().add(letter);
-        }
-        letters.setSpacing(16);
-        letters.setAlignment(Pos.CENTER);
-        
-        mainGp.add(letters, 0, 1);
-        */
     }
     
     private void setSize(){
@@ -86,11 +77,11 @@ public class GameLayout extends BorderPane{
     }
     
     public static void setLBLHINT(Label label){
-        LBLHINT = label;
+        hint = label;
     }
     
     public static Label getLBLHINT(){
-        return LBLHINT;
+        return hint;
     }
 
     public ScoreBoard getScoreBoard() {
