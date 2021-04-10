@@ -47,20 +47,28 @@ public class Runner extends Application {
         
         //Setting up number of Players and their information
         userInput = new CustomDialogs();
+      
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
-            userInput.createNewPlayer();
-            iPlayers++;
-            players.add(activePlayer);
+            Player tempPlayer = userInput.createNewPlayer();
+            if(tempPlayer != null){
+                iPlayers++;
+                players.add(tempPlayer);
+            }else{
+                i--;
+            }
         }
         
         for(int turn = 0; turn<nOfPlayers; turn++){}
         activePlayer = players.get(0);
         activePlayer.setIsLeader(true);
         
-        //userInput.askHint();
-        
+        //Setting up Board Game
         GameLayout game = new GameLayout(nOfPlayers);
+        Scene scene = new Scene(game, length, height);
+        primaryStage.setTitle("Hues And Cues");
+        primaryStage.setScene(scene);
+        primaryStage.show();
         
         userInput.askHint();
         
@@ -73,18 +81,25 @@ public class Runner extends Application {
             }
         }
         Collections.shuffle(shuffledArrayList);
-      
-        //Create cards, index increases by 4:
-        Card tempCard = new Card(shuffledArrayList);
-        //MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
-        //MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+
+        //Turns    
+        for(int repeats = 0; repeats<3; repeats++){
+            for(int turn = 0; turn<nOfPlayers; turn++){
+                Player activPlayer = players.get(turn);
+                //Creating card and sending it to activePlayer's email
+                Card activCard = new Card(shuffledArrayList);
+                MailSender.sendHTML(activPlayer.getEmail(), activCard.toHTML());
+                //Asking for hint
+                String hint;
+                do{
+                    hint = userInput.askHint();
+                }while(hint.isEmpty());
+                game.changeHint(hint);
+                
+            }
+        }
         
-        Scene scene = new Scene(game, length, height);
         
-        
-        primaryStage.setTitle("Hues And Cues");
-        primaryStage.setScene(scene);
-        primaryStage.show();
         
         Scale scale = new Scale(1, 1);
         scale.setPivotX(0);

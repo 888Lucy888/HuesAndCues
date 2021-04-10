@@ -25,13 +25,7 @@ import javafx.scene.transform.Scale;
  */
 public class GameLayout extends BorderPane{
     
-    private static Label hint;
-    
-    //public GameLayout(int nPlayers) throws Exception{
-        
-        //Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        //double length = screenSize.getWidth() / 10;
-        //double height = screenSize.getHeight() / 10;
+    private Label hint;
   
     private final double length = 800;
     private final double height = 620;
@@ -40,6 +34,7 @@ public class GameLayout extends BorderPane{
     
     public GameLayout(int nPlayers) throws Exception{
         this.setSize();
+        this.setHint();
         
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
@@ -52,9 +47,8 @@ public class GameLayout extends BorderPane{
         mainGp.add(this.getBoard(), 0, 2);
         this.setCenter(mainGp);
         
-        hint = new Label();
-        GameLayout.hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");
-        GameLayout.hint.setVisible(true);
+        hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");
+        hint.setVisible(true);
         
         GridPane hintGrid = new GridPane();
         hintGrid.setMinSize(800, 40);
@@ -76,12 +70,17 @@ public class GameLayout extends BorderPane{
         this.setMaxSize(length, height);
     }
     
-    public static void setLBLHINT(Label label){
-        hint = label;
+
+    public void setHint(){
+        this.hint = new Label();
     }
     
-    public static Label getLBLHINT(){
-        return hint;
+    public void changeHint(String hintText){
+        this.hint.setText("HINT: "+hintText);
+    }
+    
+    public Label getHint(){
+        return this.hint;
     }
 
     public ScoreBoard getScoreBoard() {
