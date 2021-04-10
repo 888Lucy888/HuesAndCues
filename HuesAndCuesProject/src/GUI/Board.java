@@ -86,6 +86,7 @@ public class Board extends BorderPane{
         gp.setAlignment(Pos.BOTTOM_CENTER);
         this.setBottom(gp);
         
+        
         //while(!br.readLine().isEmpty()){
             //String colorCodes[] = br.readLine().split(" ");
         //}    
