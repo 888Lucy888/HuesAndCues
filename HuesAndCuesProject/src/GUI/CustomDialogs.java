@@ -48,76 +48,82 @@ public class CustomDialogs{
                     Runner.nOfPlayers = Integer.parseInt(result.get());
     }
     
-    public void createNewPlayer() throws Exception{
-                Label lblName = new Label("Name");
-                Label lblEmail = new Label("Email");
-                TextField txtName = new TextField();
-                TextField txtEmail = new TextField();
+    public Player createNewPlayer() throws Exception{
+        Label lblName = new Label("Name");
+        Label lblEmail = new Label("Email");
+        TextField txtName = new TextField();
+        TextField txtEmail = new TextField();
 
-                GridPane gpUserDialog = new GridPane();
-                gpUserDialog.add(lblName, 0, 0);
-                gpUserDialog.add(lblEmail, 0, 1);
-                gpUserDialog.add(txtName, 1, 0);
-                gpUserDialog.add(txtEmail, 1, 1);
+        GridPane gpUserDialog = new GridPane();
+        gpUserDialog.add(lblName, 0, 0);
+        gpUserDialog.add(lblEmail, 0, 1);
+        gpUserDialog.add(txtName, 1, 0);
+        gpUserDialog.add(txtEmail, 1, 1);
 
-                Dialog<Player> dialog = new Dialog<>();
-                dialog.getDialogPane().setContent(gpUserDialog);
+        Dialog<Player> dialog = new Dialog<>();
+        dialog.getDialogPane().setContent(gpUserDialog);
 
-                ButtonType buttonTypeOk = new ButtonType("Listo", ButtonData.OK_DONE);
-                dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
-                dialog.initStyle(StageStyle.UNDECORATED);
+        ButtonType buttonTypeOk = new ButtonType("Listo", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        dialog.initStyle(StageStyle.UNDECORATED);
 
-                dialog.setResultConverter(new Callback <ButtonType, Player>(){
-                    @Override
-                    public Player call(ButtonType b){
-                        if(b == buttonTypeOk){
-                            Color color;
-                            switch(Runner.iPlayers){
-                                case 0:
-                                    color = Color.RED;
-                                    break;
-                                case 1:
-                                    color = Color.BLUE;
-                                    break;
-                                case 2:
-                                    color = Color.GREEN;
-                                    break;
-                                case 3:
-                                    color = Color.ORANGE;
-                                    break;
-                                case 4:
-                                    color = Color.BLUEVIOLET;
-                                    break;
-                                case 5:
-                                    color = Color.BURLYWOOD;
-                                    break;
-                                case 6:
-                                    color = Color.DARKGOLDENROD;
-                                    break;
-                                case 7:
-                                    color = Color.DARKRED;
-                                    break;
-                                case 8:
-                                    color = Color.CORAL;
-                                    break;
-                                case 9:
-                                    color = Color.GREY;
-                                    break;
-                                default:
-                                    color = Color.BLACK;
-                                    break;
-                            }
-                            return new Player(txtName.getText(), txtEmail.getText(), color);
-                        }
-                        return null;
+        dialog.setResultConverter(new Callback <ButtonType, Player>(){
+            @Override
+            public Player call(ButtonType b){
+                if(b == buttonTypeOk){
+                    Color color;
+                    switch(Runner.iPlayers){
+                        case 0:
+                            color = Color.RED;
+                            break;
+                        case 1:
+                            color = Color.BLUE;
+                            break;
+                        case 2:
+                            color = Color.GREEN;
+                            break;
+                        case 3:
+                            color = Color.ORANGE;
+                            break;
+                        case 4:
+                            color = Color.BLUEVIOLET;
+                            break;
+                        case 5:
+                            color = Color.BURLYWOOD;
+                            break;
+                        case 6:
+                            color = Color.DARKGOLDENROD;
+                            break;
+                        case 7:
+                            color = Color.DARKRED;
+                            break;
+                        case 8:
+                            color = Color.CORAL;
+                            break;
+                        case 9:
+                            color = Color.GREY;
+                            break;
+                        default:
+                            color = Color.BLACK;
+                            break;
                     }
-                });
-
-                Optional <Player> result = dialog.showAndWait();
-
-                if(result.isPresent()){
-                    Runner.activePlayer = result.get();
+                    return new Player(txtName.getText(), txtEmail.getText(), color);
                 }
+                return null;
+            }
+        });
+
+        Optional <Player> result = dialog.showAndWait();
+
+        if(result.isPresent()){
+            if(txtName.getText().isEmpty() || txtEmail.getText().isEmpty()){
+                return null;
+            }else{
+                return result.get();
+            }
+        }
+
+        return null;
     }
     
     public String askHint(){
