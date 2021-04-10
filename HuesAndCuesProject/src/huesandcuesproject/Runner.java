@@ -49,19 +49,19 @@ public class Runner extends Application {
         userInput.askHint();
         
         GameLayout game = new GameLayout(nOfPlayers);
-        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
         
-        List<List<ColorBlock>> shuffledArrayList = new ArrayList<>();
+        //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
+        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
+        List<ColorBlock> shuffledArrayList = new ArrayList<>();
         for (ColorBlock[] colorIndex : shuffleBlocks) {
-            List<ColorBlock> list = new ArrayList<>();
             for (ColorBlock i : colorIndex) {
-                list.add(i);
+                shuffledArrayList.add(i);
             }
-            shuffledArrayList.add(list);
         }
+        Collections.shuffle(shuffledArrayList);
         //Create cards, index increases by 4:
         Card tempCard = new Card(shuffledArrayList);
-        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+        MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
         MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
         
         

@@ -58,7 +58,7 @@ public class Board extends BorderPane{
                 blocks [j] [i] = new ColorBlock(seperator[j]);
                 
                 //Adds position to the ColorBlock
-                String letter = this.getCharForNumber(i);
+                String letter = this.getLetterForNumber(i);
                 String number = String.valueOf(j+1);
                 blocks[j][i].setPosition(letter, number);
                 
@@ -84,7 +84,7 @@ public class Board extends BorderPane{
         
         //Add letters
         for(int cont=0; cont<16; cont++){
-            String letter = this.getCharForNumber(cont);
+            String letter = this.getLetterForNumber(cont);
             Label tempLetter = new Label(letter);
             tempLetter.setAlignment(Pos.CENTER);
             tempLetter.setMaxSize(20, 20);
@@ -94,7 +94,7 @@ public class Board extends BorderPane{
             gp.getChildren().add(tempLetter);
         }
         for(int cont=0; cont<16; cont++){
-            String letter = this.getCharForNumber(cont);
+            String letter = this.getLetterForNumber(cont);
             Label tempLetter = new Label(letter);
             tempLetter.setAlignment(Pos.CENTER);
             tempLetter.setMaxSize(20, 20);
@@ -150,7 +150,7 @@ public class Board extends BorderPane{
         this.blocks = blocks;
     }
     
-    private String getCharForNumber(int i) {
+    private String getLetterForNumber(int i) {
         char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         if (i > 25) {
             return null;

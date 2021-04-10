@@ -19,14 +19,13 @@ public class Card extends HBox{
     private static int indexj = 0;
     private ArrayList<String> colors;
     
-    public Card(List<List<ColorBlock>> shuffledColors){
+    public Card(List<ColorBlock> shuffledColors){
         this.setColors();
         for(int i=0;i<4;i++){
-            String tempColor = shuffledColors.get(indexj).get(index).getColor();
+            String tempColor = shuffledColors.get(index).getColor();
             colors.add(tempColor);
-            if(index==30){
-                indexj++;
-                index = 0;
+            if(index==99){
+                index=0;
             }else{
                 index++;
             }

@@ -102,13 +102,6 @@ public class GameLayout extends BorderPane{
 
     public void setBoard(int nPlayers) throws Exception {
         this.board = new Board(nPlayers);
-    }
-    private String getCharForNumber(int i) {
-        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-        if (i > 25) {
-            return null;
-        }
-        return Character.toString(alphabet[i]);
-    }    
+    }  
 }
 
