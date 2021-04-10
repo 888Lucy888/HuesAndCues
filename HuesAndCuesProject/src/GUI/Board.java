@@ -29,8 +29,8 @@ public class Board extends BorderPane{
     private ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
-    private final int height = 380;
-    private final int length = 600;
+    private final int height = 360;
+    private final int length = 640;
     
     public Board (int nPlayers) throws Exception{
         
@@ -129,7 +129,7 @@ public class Board extends BorderPane{
         gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
         
-        this.setBottom(gp);
+        this.setCenter(gp);
         
         
         //while(!br.readLine().isEmpty()){

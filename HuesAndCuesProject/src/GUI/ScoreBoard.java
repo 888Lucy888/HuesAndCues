@@ -5,10 +5,13 @@
  */
 package GUI;
 
+import javafx.scene.image.Image;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -21,7 +24,7 @@ public class ScoreBoard extends BorderPane{
     private final int height = 100;
     private final int length = 600;
     private final int blockHeight = 50;
-    private final int blockLength = 20;
+    private final int blockLength = 18;
     
     public ScoreBoard() throws Exception{
         
@@ -65,9 +68,18 @@ public class ScoreBoard extends BorderPane{
         }
 
         scoreGp.setAlignment(Pos.CENTER);
+        this.setLeft(scoreGp);  
         
-        
-        this.setCenter(scoreGp);   
+        //Adding the Logo
+        Image logo = new Image(new FileInputStream("HuesAndCuesLogo.jpg"));
+        ImageView imageView = new ImageView(logo);
+        imageView.setFitHeight(120); 
+        imageView.setFitWidth(100);
+        imageView.setPreserveRatio(true); 
+        GridPane imageLogo = new GridPane();
+        imageLogo.setAlignment(Pos.CENTER);
+        imageLogo.add(imageView,0,0);
+        this.setRight(imageLogo);
     }
     
     private void setSize(){

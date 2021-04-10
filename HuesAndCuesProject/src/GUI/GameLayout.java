@@ -58,6 +58,11 @@ public class GameLayout extends BorderPane{
         this.setBottom(LBLHINT);
         LBLHINT.setVisible(true);
         
+        mainGp.setMinSize(640, 480);
+        mainGp.setMaxSize(640, 480);
+        
+        //Adding color;
+        mainGp.setStyle("-fx-background-color: black");
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         /*
         VBox numbers = new VBox();
