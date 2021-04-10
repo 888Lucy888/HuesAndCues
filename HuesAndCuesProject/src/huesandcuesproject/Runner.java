@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -22,12 +24,18 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
+    //Configures GUI size
     private final double length = 800;
     private final double height = 620;
+    
+    //Used to store the players
     public static int nOfPlayers;
     public static int iPlayers = 0;
     public static Player activePlayer;
     public static ArrayList<Player> players = new ArrayList<Player>();
+    
+    //Recieves basic user I/O
+    public static CustomDialogs userInput;
     
     @Override
     public void init() throws Exception{
@@ -37,18 +45,32 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
-        CustomDialogs userInput = new CustomDialogs();
+        //Setting up number of Players and their information
+        userInput = new CustomDialogs();
+      
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
-            userInput.createNewPlayer();
-            iPlayers++;
-            players.add(activePlayer);
+            Player tempPlayer = userInput.createNewPlayer();
+            if(tempPlayer != null){
+                iPlayers++;
+                players.add(tempPlayer);
+            }else{
+                i--;
+            }
         }
+        
+        //Sets The Active player and resets the turn count
+        for(int turn = 0; turn<nOfPlayers; turn++){}
         activePlayer = players.get(0);
+        activePlayer.setIsLeader(true);
+        iPlayers = 0;
         
-        userInput.askHint();
-        
+        //Setting up Board Game
         GameLayout game = new GameLayout(nOfPlayers);
+        Scene scene = new Scene(game, length, height);
+        primaryStage.setTitle("Hues And Cues");
+        primaryStage.setScene(scene);
+        primaryStage.show();
         
         //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
         ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
@@ -59,18 +81,25 @@ public class Runner extends Application {
             }
         }
         Collections.shuffle(shuffledArrayList);
-        //Create cards, index increases by 4:
-        Card tempCard = new Card(shuffledArrayList);
-        MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
-        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+
+        //Turns    
+        for(int repeats = 0; repeats<3; repeats++){
+            for(int turn = 0; turn<nOfPlayers; turn++){
+                Player activPlayer = players.get(turn);
+                //Creating card and sending it to activePlayer's email
+                Card activCard = new Card(shuffledArrayList);
+                MailSender.sendHTML(activPlayer.getEmail(), activCard.toHTML());
+                //Asking for hint
+                String hint;
+                do{
+                    hint = userInput.askHint();
+                }while(hint.isEmpty());
+                game.changeHint(hint);
+                
+            }
+        }
         
         
-        Scene scene = new Scene(game, length, height);
-        
-        
-        primaryStage.setTitle("Hues And Cues");
-        primaryStage.setScene(scene);
-        primaryStage.show();
         
         Scale scale = new Scale(1, 1);
         scale.setPivotX(0);
