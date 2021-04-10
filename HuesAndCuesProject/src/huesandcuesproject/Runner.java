@@ -37,6 +37,7 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
+        //Setting up number of Players and their information
         CustomDialogs userInput = new CustomDialogs();
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
@@ -44,9 +45,11 @@ public class Runner extends Application {
             iPlayers++;
             players.add(activePlayer);
         }
+        
+        for(int turn = 0; turn<nOfPlayers; turn++){}
         activePlayer = players.get(0);
         
-        userInput.askHint();
+        //userInput.askHint();
         
         GameLayout game = new GameLayout(nOfPlayers);
         
@@ -59,11 +62,13 @@ public class Runner extends Application {
             }
         }
         Collections.shuffle(shuffledArrayList);
+      
         //Create cards, index increases by 4:
         Card tempCard = new Card(shuffledArrayList);
-        MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
-        MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
+        //MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
+        //MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
         
+        userInput.askHint();
         
         Scene scene = new Scene(game, length, height);
         
