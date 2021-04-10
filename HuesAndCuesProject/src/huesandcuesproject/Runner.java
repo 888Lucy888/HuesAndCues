@@ -37,6 +37,7 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
+        //Setting up number of Players and their information
         CustomDialogs userInput = new CustomDialogs();
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
