@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
@@ -65,9 +66,9 @@ public class Runner extends Application {
         
         //Setting up Board Game
         GameLayout game = new GameLayout(nOfPlayers);
-        Scene scene = new Scene(game, length, height);
+        Scene mainScene = new Scene(game, length, height);
         primaryStage.setTitle("Hues And Cues");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(mainScene);
         primaryStage.show();
         
         userInput.askHint();
@@ -99,12 +100,16 @@ public class Runner extends Application {
             }
         }
         
+        //Changing Main Game Scene to Winner Scene
+        Winner winner = new Winner(new Player("Lucy","email",Color.BLUEVIOLET));
+        Scene winningScene = new Scene(winner, 500, 400);
+        primaryStage.setScene(winningScene);
         
-        
+        //Scale for different display sizes
         Scale scale = new Scale(1, 1);
         scale.setPivotX(0);
         scale.setPivotY(0);
-        scene.getRoot().getTransforms().setAll(scale);
+        mainScene.getRoot().getTransforms().setAll(scale);
         
     }
     
