@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
-    private final double length = 640;
+    private final double length = 800;
     private final double height = 620;
     public static int nOfPlayers;
     public static int iPlayers = 0;

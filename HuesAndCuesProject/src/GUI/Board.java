@@ -12,6 +12,7 @@ import java.io.FileReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -61,7 +62,7 @@ public class Board extends BorderPane{
                 String number = String.valueOf(j+1);
                 blocks[j][i].setPosition(letter, number);
                 
-                sp.getChildren().add(blocks [j] [i] );
+                sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
@@ -75,14 +76,59 @@ public class Board extends BorderPane{
                         Runner.activePlayer = Runner.players.get(iPlayers);
                     }
                 });
-                GridPane.setConstraints(sp, j, i);
+                GridPane.setConstraints(sp, j+1, i+1);
                 gp.getChildren().add(sp);
             }
             i++;
         }
-
         
+        //Add letters
+        for(int cont=0; cont<16; cont++){
+            String letter = this.getCharForNumber(cont);
+            Label tempLetter = new Label(letter);
+            tempLetter.setAlignment(Pos.CENTER);
+            tempLetter.setMaxSize(20, 20);
+            tempLetter.setMinSize(20, 20);
+            tempLetter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempLetter, 0, cont+1);
+            gp.getChildren().add(tempLetter);
+        }
+        for(int cont=0; cont<16; cont++){
+            String letter = this.getCharForNumber(cont);
+            Label tempLetter = new Label(letter);
+            tempLetter.setAlignment(Pos.CENTER);
+            tempLetter.setMaxSize(20, 20);
+            tempLetter.setMinSize(20, 20);
+            tempLetter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempLetter, 31, cont+1);
+            gp.getChildren().add(tempLetter);
+        }
+        
+        //Add numbers
+        for(int cont=1; cont<31; cont++){
+            String number = String.valueOf(cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.CENTER);
+            tempNumber.setMaxSize(20, 20);
+            tempNumber.setMinSize(20, 20);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont, 0);
+            gp.getChildren().add(tempNumber);
+        }
+        for(int cont=1; cont<31; cont++){
+            String number = String.valueOf(cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.CENTER);
+            tempNumber.setMaxSize(20, 20);
+            tempNumber.setMinSize(20, 20);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont, 17);
+            gp.getChildren().add(tempNumber);
+        }
+        
+        gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
+        
         this.setBottom(gp);
         
         

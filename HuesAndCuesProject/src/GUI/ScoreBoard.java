@@ -8,6 +8,7 @@ package GUI;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -17,10 +18,10 @@ import javafx.scene.layout.GridPane;
  */
 public class ScoreBoard extends BorderPane{
     
-    private final int height = 50;
+    private final int height = 100;
     private final int length = 600;
-    private final int blockHeight = 40;
-    private final int blockLength = 15;
+    private final int blockHeight = 50;
+    private final int blockLength = 20;
     
     public ScoreBoard() throws Exception{
         
@@ -40,7 +41,31 @@ public class ScoreBoard extends BorderPane{
             }
             j++;
         }
-        scoreGp.setAlignment(Pos.BOTTOM_CENTER);
+        
+        //Adding numbers on scoreboard
+        for(int cont=5; cont<26; cont+=5){
+            String number = String.valueOf(cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.BOTTOM_CENTER);
+            tempNumber.setMaxSize(20, 50);
+            tempNumber.setMinSize(20, 50);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont-1, 0);
+            scoreGp.getChildren().add(tempNumber);
+        }
+        for(int cont=5; cont<26; cont+=5){
+            String number = String.valueOf(55-cont);
+            Label tempNumber = new Label(number);
+            tempNumber.setAlignment(Pos.BOTTOM_CENTER);
+            tempNumber.setMaxSize(20, 50);
+            tempNumber.setMinSize(20, 50);
+            tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
+            GridPane.setConstraints(tempNumber, cont-5, 1);
+            scoreGp.getChildren().add(tempNumber);
+        }
+
+        scoreGp.setAlignment(Pos.CENTER);
+        
         
         this.setCenter(scoreGp);   
     }

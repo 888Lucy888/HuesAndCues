@@ -48,6 +48,7 @@ public class GameLayout extends BorderPane{
         this.setBoard(nPlayers);
 
         mainGp.add(this.getScoreBoard(), 0, 0);
+        mainGp.add(new Label(), 0, 1);
         mainGp.add(this.getBoard(), 0, 2);
         //Board gameBoard = new Board();
         //this.setCenter(gameBoard);
@@ -56,7 +57,8 @@ public class GameLayout extends BorderPane{
         this.setCenter(mainGp);
         this.setBottom(LBLHINT);
         LBLHINT.setVisible(true);
-        this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        
+        this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         /*
         VBox numbers = new VBox();
         HBox letters = new HBox();
