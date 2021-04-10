@@ -126,7 +126,7 @@ public class CustomDialogs{
         dialog.initStyle(StageStyle.UNDECORATED);
         
         dialog.setTitle("Hint");
-        dialog.setHeaderText("Enter hint");
+        dialog.setHeaderText("Enter a one word hint");
         
 //        VBox vbHint = new VBox();
 //        
@@ -142,7 +142,7 @@ public class CustomDialogs{
         
         if(result.isPresent()){
             Label label = new Label();
-            label.setText(result.get());
+            label.setText("HINT: "+result.get());
             GameLayout.setLBLHINT(label);
         }
         

@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  */
 public class Runner extends Application {
     
-    private final double length = 640;
+    private final double length = 800;
     private final double height = 620;
     public static int nOfPlayers;
     public static int iPlayers = 0;
@@ -37,6 +37,7 @@ public class Runner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         
+        //Setting up number of Players and their information
         CustomDialogs userInput = new CustomDialogs();
         userInput.getNumberOfUsers();
         for(int i = 0; i<nOfPlayers; i++){
@@ -44,26 +45,33 @@ public class Runner extends Application {
             iPlayers++;
             players.add(activePlayer);
         }
+        
+        for(int turn = 0; turn<nOfPlayers; turn++){}
         activePlayer = players.get(0);
+        
+        //userInput.askHint();
+        
+        GameLayout game = new GameLayout(nOfPlayers);
+        
+        //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
+        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
+        List<ColorBlock> shuffledArrayList = new ArrayList<>();
+        for (ColorBlock[] colorIndex : shuffleBlocks) {
+            for (ColorBlock i : colorIndex) {
+                shuffledArrayList.add(i);
+            }
+        }
+        Collections.shuffle(shuffledArrayList);
+        
+        //Create cards, index increases by 4:
+        Card tempCard = new Card(shuffledArrayList);
+        //MailSender.sendHTML("chuggaaconroy888@gmail.com", new Card(shuffledArrayList).toHTML());
+        //MailSender.sendHTML("crlvlz0215@gmail.com", new Card(shuffledArrayList).toHTML());
         
         userInput.askHint();
         
-        GameLayout game = new GameLayout(nOfPlayers);
-        ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
-        
-        List<List<ColorBlock>> shuffledArrayList = new ArrayList<>();
-        for (ColorBlock[] colorIndex : shuffleBlocks) {
-            List<ColorBlock> list = new ArrayList<>();
-            for (ColorBlock i : colorIndex) {
-                list.add(i);
-            }
-            shuffledArrayList.add(list);
-        }
-        //Create cards, index increases by 4:
-        Card tempCard = new Card(shuffledArrayList);
-        
-        
         Scene scene = new Scene(game, length, height);
+        
         
         primaryStage.setTitle("Hues And Cues");
         primaryStage.setScene(scene);
