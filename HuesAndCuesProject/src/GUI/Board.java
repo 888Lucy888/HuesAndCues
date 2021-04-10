@@ -90,7 +90,7 @@ public class Board extends BorderPane{
                             Runner.players.get(Runner.iPlayers).setIsLeader(true);
                             Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                             //Asks the hint-giver for their first hint
-                            Runner.askFirstHint();
+                            Runner.game.changeHint(Runner.askFirstHint());
                         }
                         //Used to put the pieces of the other players
                         else{
@@ -125,7 +125,7 @@ public class Board extends BorderPane{
                                     }
                                     Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                                 }
-                                //Else it's ignores and he can seect the correct block
+                                //Else it's ignored and he can seect the correct block
                             }
                         }
                     }

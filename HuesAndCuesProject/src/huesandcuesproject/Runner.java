@@ -41,6 +41,9 @@ public class Runner extends Application {
     //Recieves basic user I/O
     public static CustomDialogs userInput;
     
+    //Recieves basic user I/O
+    public static CustomDialogs userInput;
+    
     @Override
     public void init() throws Exception{
         
@@ -62,7 +65,6 @@ public class Runner extends Application {
                 i--;
             }
         }
-        
         //Sets The Active player and resets the turn count
         activePlayer = players.get(0);
         activePlayer.setIsLeader(true);
@@ -89,23 +91,6 @@ public class Runner extends Application {
         game.changeHint(askFirstHint());
         iPlayers++;
         activePlayer = players.get(iPlayers);
-        
-        //Turns    
-//        for(int repeats = 0; repeats<3; repeats++){
-//            for(int turn = 0; turn<nOfPlayers; turn++){
-//                Player activPlayer = players.get(turn);
-//                //Creating card and sending it to activePlayer's email
-//                Card activCard = new Card(shuffledArrayList);
-//                MailSender.sendHTML(activPlayer.getEmail(), activCard.toHTML());
-//                //Asking for hint
-//                String hint;
-//                do{
-//                    hint = userInput.askHint();
-//                }while(hint.isEmpty());
-//                game.changeHint(hint);
-//                
-//            }
-//        }
         
         
         
