@@ -75,8 +75,6 @@ public class Runner extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
         
-        userInput.askHint();
-        
         //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
         ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
         shuffledArrayList = new ArrayList<>();
@@ -93,9 +91,9 @@ public class Runner extends Application {
         activePlayer = players.get(iPlayers);
         
         //Changing Main Game Scene to Winner Scene
-        Winner winner = new Winner(new Player("Lucy","email",Color.BLUEVIOLET));
-        Scene winningScene = new Scene(winner, 500, 400);
-        primaryStage.setScene(winningScene);
+//        Winner winner = new Winner(new Player("Lucy","email",Color.BLUEVIOLET));
+//        Scene winningScene = new Scene(winner, 500, 400);
+//        primaryStage.setScene(winningScene);
         
         //Scale for different display sizes
         Scale scale = new Scale(1, 1);

@@ -37,7 +37,7 @@ public class ColorBlock extends Button{
     //Constructor used in the board to be able to calculate distance
     public ColorBlock(String color, int posX, int posY) throws Exception{
         this.setColor(color);
-        this.setSize(length, height);
+        this.setSize(LENGTH, HEIGHT);
         this.setStyle("-fx-background-color: #" + this.getColor() + "; -fx-border-color: black");
         this.setPosX(posX);
         this.setPosY(posY);

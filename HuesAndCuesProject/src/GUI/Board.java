@@ -79,7 +79,9 @@ public class Board extends BorderPane{
                     @Override
                     public void handle(ActionEvent event){
                         //Checks if the player who gave the hint is the current player
-                        if(Runner.activePlayer.getIsLeader()){
+                        if(blocks [y] [x].getSelected())
+                            tri.setVisible(false);
+                        else if(Runner.activePlayer.getIsLeader()){
                             //Updates to 0 for next round
                             iRounds = 0;
                             for(int k = 0; k < 16; k++){
@@ -91,7 +93,7 @@ public class Board extends BorderPane{
                                 }
                                 System.out.print("\n");
                             }
-                            System.out.println("You selected the correct color");
+                            clearBlocks();
                             //Changes the hint-giver to the next player
                             Runner.players.get(Runner.iPlayers).setIsLeader(false);
                             Runner.iPlayers++;
@@ -102,6 +104,8 @@ public class Board extends BorderPane{
                             Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                             //Asks the hint-giver for their first hint
                             Runner.game.changeHint(Runner.askFirstHint());
+                            Runner.iPlayers++;
+                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                         }
                         //Used to put the pieces of the other players
                         else{
@@ -262,6 +266,17 @@ public class Board extends BorderPane{
     private void clearSelected(int j, int i){
         blocks [j] [i].clearSelected();
         blocks [j] [i].clearSelectedBy();
+    }
+    
+    private void clearBlocks(){
+        //Clears all the blocks
+        for(int k = 0; k < 16; k++){
+            for(int l = 0; l < 30; l++){
+                if(blocks [l] [k].getSelected())
+                    blocks [l] [k].fire();
+                blocks [l] [k].clearSelected();
+            }
+        }
     }
     
 }
