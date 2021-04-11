@@ -43,7 +43,7 @@ public class Board extends BorderPane{
         this.setGp();
         this.setScoreGp();
         this.setMainStackPane();
-        this.setCenter(mainStackPane);
+        this.setCenter(this.getMainStackPane());
         this.setSize();
         
         String line;
@@ -84,7 +84,7 @@ public class Board extends BorderPane{
                         //Checks if the player who gave the hint is the current player
                         if(blocks [y] [x].getSelected() && isClear){
                             tri.setVisible(false);
-                        }else if(Runner.activePlayer.getIsLeader()){
+                        }else if(Runner.getActivePlayer().getIsLeader()){
                             
                             //Updates to 0 for next round
                             iRounds = 0;
@@ -101,6 +101,8 @@ public class Board extends BorderPane{
                                     points.setText(scr + " ");
                                     if(score == 0){
                                         points.setVisible(false);
+                                    }else{
+                                        //Test Runner.activePlayer.setScore(score);
                                     }
                                     getScoreGp().add(points, l+1, k+1);
                                     getScoreGp().setDisable(false);
@@ -123,34 +125,34 @@ public class Board extends BorderPane{
                             }catch(InterruptedException ex){
                                 Logger.getLogger(Board.class.getName()).log(Level.SEVERE,null, ex);
                             }
-                            
+                            if
                             //Resets ScoringBoard
-                            //resetScore();
+                            resetScore();
                             
                             clearBlocks();
                             //Changes the hint-giver to the next player
-                            Runner.players.get(Runner.iPlayers).setIsLeader(false);
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(false);
                             Runner.iPlayers++;
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.players.get(Runner.iPlayers).setIsLeader(true);
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.getPlayers().get(Runner.iPlayers).setIsLeader(true);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                             
                             
                             //Asks the hint-giver for their first hint
-                            Runner.game.changeHint(Runner.askFirstHint());
+                            Runner.getGame().changeHint(Runner.askFirstHint());
                             Runner.iPlayers++;
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                         }
                         //Used to put the pieces of the other players
                         else{
                             setAsSelected(y, x);
                             //Sets a triangle 
-                            tri.setFill(Runner.activePlayer.getColor());
+                            tri.setFill(Runner.getActivePlayer().getColor());
                             tri.setVisible(true);
                             //Changes the current player
                             Runner.iPlayers++;
@@ -158,26 +160,26 @@ public class Board extends BorderPane{
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.iPlayers);
                             //If the current player is detected as the hint-giver
                             //Asks for a hint without need of pressing anything
-                            if(Runner.activePlayer.getIsLeader() && iRounds == 0){
+                            if(Runner.getActivePlayer().getIsLeader() && iRounds == 0){
                                 //Updates the round pointing that a full round has passed
                                 iRounds++;
                                 try {
                                     //Asks if they want to give another hint
-                                    Runner.userInput.askForAnotherHint();
+                                    Runner.getUserInput().askForAnotherHint();
                                 } catch (Exception ex) {
                                     Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 //If yes they give another hint and the hint is updated
-                                if(Runner.userInput.getHintConfirm()){
-                                    Runner.game.changeHint(Runner.askAnotherHint());
+                                if(Runner.getUserInput().getHintConfirm()){
+                                    Runner.getGame().changeHint(Runner.askAnotherHint());
                                     Runner.iPlayers++;
-                                    if(Runner.iPlayers == nPlayers){
-                                        Runner.iPlayers = 0;
+                                    if(Runner.getiPlayers() == nPlayers){
+                                        Runner.setiPlayers(0);
                                     }
-                                    Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                                    Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                                 }
                             }
                             //Else it's ignored and he can select the correct block
