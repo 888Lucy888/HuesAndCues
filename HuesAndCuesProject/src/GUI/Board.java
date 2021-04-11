@@ -55,6 +55,7 @@ public class Board extends BorderPane{
         while((line = br.readLine()) != null){
             String [] seperator = line.split(",");
             for(int j = 0; j < 30; j++){
+                //Creates Triangles Players can us to select their answer
                 StackPane sp = new StackPane();
                 Polygon tri = new Polygon();
                 tri.getPoints().addAll(new Double[]{

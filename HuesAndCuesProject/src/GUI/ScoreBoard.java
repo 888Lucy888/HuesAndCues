@@ -150,8 +150,19 @@ public class ScoreBoard extends BorderPane{
     
     
     
-    public void updateScoreBoard(Player player){
-        this.getTriangleGp().getChildren().get(0).setVisible(true);
+    public void updateScoreBoard(){
+        this.getTriangleGp().getChildren().clear();
+        for (int i=0; i<Runner.getPlayers().size(); i++){
+            Polygon tri = new Polygon();
+            tri.getPoints().addAll(new Double[]{
+                0.0, 8.0,
+                4.0, 0.0,
+                8.0, 8.0
+            });
+            tri.setFill(Runner.getPlayers().get(i).getColor());
+            tri.setVisible(true);
+            this.getTriangleGp().getChildren().get(Runner.getPlayers().get(i).getScore());
+        }
     }
     
     
