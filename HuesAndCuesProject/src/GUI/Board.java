@@ -5,9 +5,7 @@
  */
 package GUI;
 
-import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.logging.Level;
@@ -21,7 +19,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.transform.Scale;
 
 /**
  *
@@ -39,7 +36,7 @@ public class Board extends BorderPane{
     public Board (int nPlayers) throws Exception{
         
         this.setSize();
-        gp = new GridPane();
+        this.setGp();
         
         String line;
         
@@ -79,9 +76,16 @@ public class Board extends BorderPane{
                     @Override
                     public void handle(ActionEvent event){
                         //Checks if the player who gave the hint is the current player
-                        if(blocks [y] [x].getSelected())
+                        if(blocks [y] [x].getSelected()){
                             tri.setVisible(false);
-                        else if(Runner.activePlayer.getIsLeader()){
+                            GridPane scoringPane = new GridPane();
+                            scoringPane.setMaxSize(20, 20);
+                            scoringPane.setMinSize(20, 20);
+                            scoringPane.setStyle("fx-background-color: white");
+                            scoringPane.setAlignment(Pos.CENTER);
+                            scoringPane.getChildren().add(new Label("Hello"));
+                            getGp().add(scoringPane, x, y);
+                        }else if(Runner.activePlayer.getIsLeader()){
                             //Updates to 0 for next round
                             iRounds = 0;
                             for(int k = 0; k < 16; k++){
@@ -149,7 +153,7 @@ public class Board extends BorderPane{
                     }
                 });
                 GridPane.setConstraints(sp, j+1, i+1);
-                gp.getChildren().add(sp);
+                this.getGp().getChildren().add(sp);
             }
             i++;
         }
@@ -281,5 +285,15 @@ public class Board extends BorderPane{
             }
         }
     }
+
+    public GridPane getGp() {
+        return gp;
+    }
+
+    private void setGp() {
+        this.gp = new GridPane();
+    }
+    
+    
     
 }
