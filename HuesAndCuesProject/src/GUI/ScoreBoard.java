@@ -119,7 +119,9 @@ public class ScoreBoard extends BorderPane{
         this.scoreGp = new GridPane();
     }
     
-    
+    public void updateScoreBoard(){
+        
+    }
     
     
 }
