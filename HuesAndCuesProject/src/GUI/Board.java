@@ -136,7 +136,7 @@ public class Board extends BorderPane{
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.getPlayers().get(Runner.iPlayers).setIsLeader(true);
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(true);
                             Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                             
                             
@@ -160,7 +160,7 @@ public class Board extends BorderPane{
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.getPlayers().get(Runner.iPlayers);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                             //If the current player is detected as the hint-giver
                             //Asks for a hint without need of pressing anything
                             if(Runner.getActivePlayer().getIsLeader() && iRounds == 0){
@@ -184,7 +184,7 @@ public class Board extends BorderPane{
                             }
                             //Else it's ignored and he can select the correct block
                             else if(Runner.activePlayer.getIsLeader() && iRounds != 0)
-                                Runner.userInput.showAlertWindow(Runner.activePlayer.getName() + " choose the correct block");
+                                Runner.getUserInput().showAlertWindow(Runner.getActivePlayer().getName() + " choose the correct block");
                         }
                     }
                 });
