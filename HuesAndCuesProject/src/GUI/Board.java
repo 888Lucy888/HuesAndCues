@@ -115,6 +115,8 @@ public class Board extends BorderPane{
                             if(index == nPlayers){
                                 index = 0;
                             }
+                            
+                             //Alerts the new cuegiver of their new status
                             Runner.userInput.showAlertWindow(Runner.players.get(index).getName() + " is the cue-giver");
                             
                             //Shows Scoring Board for 10 seconds
@@ -125,7 +127,7 @@ public class Board extends BorderPane{
                             }
                             
                             //Resets ScoringBoard
-                            //resetScore();
+                            resetScore();
                             
                             clearBlocks();
                             //Changes the hint-giver to the next player
