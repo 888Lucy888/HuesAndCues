@@ -39,7 +39,7 @@ public class Runner extends Application {
     //Used to store the blocks and cards
     private static List<ColorBlock> shuffledArrayList;
     
-    //Recieves basic user I/O
+    //Receives basic user I/O
     public static CustomDialogs userInput;
     
     @Override
