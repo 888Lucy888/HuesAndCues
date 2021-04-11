@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 public class Card extends HBox{
  
     private static int index = 0;
-    private static int indexj = 0;
     private ArrayList<String> colors;
     private ArrayList<String> positions;
     
@@ -30,7 +29,7 @@ public class Card extends HBox{
             colors.add(tempColor);
             positions.add(tempPos);
             if(index==99){
-                index=0;
+                this.setIndex(0);
             }else{
                 index++;
             }
@@ -71,10 +70,10 @@ public class Card extends HBox{
                     "height: 100px;\n" +
                     "width: 100px;\n" +
                 "}"
-                + "#block1 { background-color: #" + colors.get(0) + ";}"
-                + "#block2 { background-color: #" + colors.get(1) + ";}"
-                + "#block3 { background-color: #" + colors.get(2) + ";}"
-                + "#block4 { background-color: #" + colors.get(3) + ";}"
+                + "#block1 { background-color: #" + this.getColors().get(0) + ";}"
+                + "#block2 { background-color: #" + this.getColors().get(1) + ";}"
+                + "#block3 { background-color: #" + this.getColors().get(2) + ";}"
+                + "#block4 { background-color: #" + this.getColors().get(3) + ";}"
                 + ".colored {width: 50px; height: 50px;}"
                 + ".data { color: white; font-weight: bold; text-align: center;}  </style></head>"
                 + "<body>"
@@ -84,16 +83,16 @@ public class Card extends HBox{
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block2\"></div></td>"
                         + "</tr>"
                         + "<tr class = \"Position\">"
-                            + "<td class = \"data\"><p>" + positions.get(0) + "</p></td>"
-                            + "<td class = \"data\"><p>" + positions.get(1) + "</p></td>"
+                            + "<td class = \"data\"><p>" + this.getPositions().get(0) + "</p></td>"
+                            + "<td class = \"data\"><p>" + this.getPositions().get(1) + "</p></td>"
                         + "</tr>"
                         + "<tr class = \"tableRow\">"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block3\"></div></td>"
                             + "<td class = \"tableData\"><div class = \"colored\" id = \"block4\"></div></td>"
                         + "</tr>"
                         + "<tr class = \"Position\">"
-                            + "<td class = \"data\"><p>" + positions.get(2) + "</p></td>"
-                            + "<td class = \"data\"><p>" + positions.get(3) + "</p></td>"
+                            + "<td class = \"data\"><p>" + this.getPositions().get(2) + "</p></td>"
+                            + "<td class = \"data\"><p>" + this.getPositions().get(3) + "</p></td>"
                         + "</tr>"
                     +"</table>"
                 + "</body>"
@@ -105,7 +104,7 @@ public class Card extends HBox{
         return index;
     }
 
-    public static void setIndex(int index) {
+    private static void setIndex(int index) {
         Card.index = index;
     }
 
@@ -121,6 +120,9 @@ public class Card extends HBox{
         this.positions = new ArrayList();
     }
     
+    public ArrayList<String> getPositions(){
+        return this.positions;
+    }
     
     
     

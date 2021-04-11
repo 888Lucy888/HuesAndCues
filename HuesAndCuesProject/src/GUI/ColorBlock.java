@@ -27,7 +27,7 @@ public class ColorBlock extends Button{
     private ColorBlock(){  
     }
     
-    //Constructor called when only color is needed
+    //Constructor called when only color is needed (ScoreBoard)
     public ColorBlock(String color) throws Exception{
         this.setColor(color);
         this.setSize(LENGTH, HEIGHT);

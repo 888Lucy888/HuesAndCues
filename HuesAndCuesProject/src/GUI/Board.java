@@ -143,7 +143,7 @@ public class Board extends BorderPane{
                                     }
                                     Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                                 }
-                                //Else it's ignored and he can seect the correct block
+                                //Else it's ignored and he can select the correct block
                             }
                         }
                     }
