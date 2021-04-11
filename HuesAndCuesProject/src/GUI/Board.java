@@ -78,9 +78,10 @@ public class Board extends BorderPane{
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
-                        //Checks if the player who gave the hint is the current player
+                        //Clears the blocks after each turn
                         if(blocks [y] [x].getSelected())
                             tri.setVisible(false);
+                        //Checks if the player who gave the hint is the current player
                         else if(Runner.activePlayer.getIsLeader()){
                             //Updates to 0 for next round
                             iRounds = 0;
