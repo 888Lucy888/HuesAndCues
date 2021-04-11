@@ -196,4 +196,35 @@ public class CustomDialogs{
         return confirm;
     }
     
+    public void showAlertWindow(String text){
+        Label lblAlert = new Label(text);
+        
+        Dialog<String> dialog = new Dialog<>();
+        
+        dialog.getDialogPane().setContent(lblAlert);
+        dialog.initStyle(StageStyle.UTILITY);
+        
+        ButtonType buttonTypeOk = new ButtonType("Yes", ButtonData.YES);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        
+        dialog.setResultConverter(new Callback <ButtonType, String>(){
+            @Override
+            public String call(ButtonType b){
+                if(b == buttonTypeOk){
+                    return "YES";
+                }
+                return null;
+            }
+        });
+        
+        Optional <String> result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            
+            text = result.get();
+            
+        }
+        
+    }
+    
 }
