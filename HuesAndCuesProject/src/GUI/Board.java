@@ -117,7 +117,7 @@ public class Board extends BorderPane{
                             if(index == nPlayers){
                                 index = 0;
                             }
-                            Runner.userInput.showAlertWindow(Runner.players.get(index).getName() + " is the cue-giver");
+                            Runner.userInput.showAlertWindow(Runner.getPlayers().get(index).getName() + " is the cue-giver");
                             
                             //Shows Scoring Board for 10 seconds
                             try{
@@ -125,7 +125,7 @@ public class Board extends BorderPane{
                             }catch(InterruptedException ex){
                                 Logger.getLogger(Board.class.getName()).log(Level.SEVERE,null, ex);
                             }
-                            if
+                            
                             //Resets ScoringBoard
                             resetScore();
                             
