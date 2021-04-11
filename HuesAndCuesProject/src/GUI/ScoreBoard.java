@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
+import huesandcuesproject.Runner;
 import javafx.scene.image.Image;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -14,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -30,11 +33,15 @@ public class ScoreBoard extends BorderPane{
     private final int BLOCKLENGTH = 20;
     
     private GridPane scoreGp;
+    private GridPane triangleGp;
+    private StackPane scoreBoardStacked;
     
     public ScoreBoard(int numberOfPlayers) throws Exception{
         
-        this.setSize();
         this.setScoreGp();
+        this.setTriangleGp();
+        this.setSize();
+        this.setScoreBoardStacked();
         
         //Reads colors to make ColorBlocks
         FileReader fr = new FileReader("colorScoreMatrix.csv");
@@ -51,20 +58,20 @@ public class ScoreBoard extends BorderPane{
                 for(int k=0; k<numberOfPlayers; k++){
                     Polygon tri = new Polygon();
                     tri.getPoints().addAll(new Double[]{
-                        0.0, 10.0,
-                        5.0, 0.0,
-                        10.0, 10.0
+                        0.0, 8.0,
+                        4.0, 0.0,
+                        8.0, 8.0
                     });
-                    tri.setFill(Color.BLACK);
+                    tri.setFill(Runner.getPlayers().get(k).getColor());
                     tri.setVisible(false);
                     scoreTri.setMaxSize(BLOCKLENGTH,BLOCKHEIGHT);
                     scoreTri.setMinSize(BLOCKLENGTH,BLOCKHEIGHT);
                     scoreTri.getChildren().add(tri);
-                    scoreTri.setAlignment(Pos.CENTER);
+                    scoreTri.setAlignment(Pos.TOP_CENTER);
                 }
                 tempColorBlock.setSize(BLOCKLENGTH, BLOCKHEIGHT);
                 this.getScoreGp().add(tempColorBlock, i, j);
-                this.getScoreGp().add(scoreTri, i, j);
+                this.getTriangleGp().add(scoreTri, i, j);
             }
             j++;
         }
@@ -90,9 +97,13 @@ public class ScoreBoard extends BorderPane{
             GridPane.setConstraints(tempNumber, cont-5, 1);
             this.getScoreGp().getChildren().add(tempNumber);
         }
-
+        
+        //Aligned and adding to BorderPane
         this.getScoreGp().setAlignment(Pos.CENTER);
-        this.setLeft(this.getScoreGp());  
+        this.getTriangleGp().setAlignment(Pos.CENTER);
+        this.getScoreBoardStacked().setAlignment(Pos.CENTER);
+        
+        this.setLeft(this.getScoreBoardStacked());  
         
         //Adds the Logo
         Image logo = new Image(new FileInputStream("HuesAndCuesLogo.jpg"));
@@ -119,8 +130,28 @@ public class ScoreBoard extends BorderPane{
         this.scoreGp = new GridPane();
     }
     
-    public void updateScoreBoard(){
-        
+    private void setTriangleGp(){
+        this.triangleGp = new GridPane();
+    }
+    
+    public GridPane getTriangleGp(){
+        return this.triangleGp;
+    }
+
+    public StackPane getScoreBoardStacked() {
+        return scoreBoardStacked;
+    }
+
+    private void setScoreBoardStacked() {
+        this.scoreBoardStacked = new StackPane();
+        this.scoreBoardStacked.getChildren().add(scoreGp);
+        this.scoreBoardStacked.getChildren().add(triangleGp);        
+    }
+    
+    
+    
+    public void updateScoreBoard(Player player){
+        this.getTriangleGp().getChildren().get(0).setVisible(true);
     }
     
     

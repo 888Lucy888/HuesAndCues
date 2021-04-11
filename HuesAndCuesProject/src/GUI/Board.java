@@ -343,7 +343,7 @@ public class Board extends BorderPane{
     }
     
     private void resetScore(){
-        this.scoreGp.getChildren().removeAll();
+        this.scoreGp.getChildren().clear();
         this.scoreGp.toBack();
     }
 
