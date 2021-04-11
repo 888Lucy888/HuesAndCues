@@ -33,8 +33,8 @@ public class Runner extends Application {
     public static int nOfPlayers;
     public static int iPlayers = 0;
     public static Player activePlayer;
-    public static ArrayList<Player> players = new ArrayList<Player>();
-    public static GameLayout game;
+    private static ArrayList<Player> players = new ArrayList<Player>();
+    private static GameLayout game;
     
     //Used to store the blocks and cards
     private static List<ColorBlock> shuffledArrayList;
@@ -127,6 +127,38 @@ public class Runner extends Application {
      */
     public static void main(String[] args) throws Exception{
         launch(args);
+    }
+
+    public static int getnOfPlayers() {
+        return nOfPlayers;
+    }
+
+    public static int getiPlayers() {
+        return iPlayers;
+    }
+
+    public static Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public static ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public static GameLayout getGame() {
+        return game;
+    }
+
+    public static CustomDialogs getUserInput() {
+        return userInput;
+    }
+
+    public static void setiPlayers(int iPlayers) {
+        Runner.iPlayers = iPlayers;
+    }
+    
+    public static void updatePlayers(int index){
+        Runner.players.get(index).setScore(Runner.activePlayer.getScore());
     }
     
 }

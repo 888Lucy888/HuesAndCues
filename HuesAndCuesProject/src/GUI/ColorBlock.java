@@ -22,7 +22,7 @@ public class ColorBlock extends Button{
     private int posX;
     private int posY;
     private boolean isSelected;
-    private Player selectedBy;
+    private String selectedBy;
     
     private ColorBlock(){  
     }
@@ -42,6 +42,7 @@ public class ColorBlock extends Button{
         this.setPosX(posX);
         this.setPosY(posY);
         this.clearSelected();
+        this.setSelectedBy("");
     }
     
     private void setColor(String color){
@@ -85,8 +86,8 @@ public class ColorBlock extends Button{
         this.isSelected = true;
     }
     
-    public void setSelectedBy(){
-        this.selectedBy = Runner.activePlayer;
+    public void setSelectedBy(String selected){
+        this.selectedBy = selected;
     }
     
     public void clearSelected(){
@@ -101,7 +102,7 @@ public class ColorBlock extends Button{
         return this.isSelected;
     }
     
-    public Player getSelectedBy(){
+    public String getSelectedBy(){
         return this.selectedBy;
     }
     

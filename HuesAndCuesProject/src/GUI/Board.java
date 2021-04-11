@@ -37,13 +37,14 @@ public class Board extends BorderPane{
     public int iRounds = 0;
     //Used to clear the board
     private boolean isClear = false;
+    private int score = 0;
     
     public Board (int nPlayers) throws Exception{
         
         this.setGp();
         this.setScoreGp();
         this.setMainStackPane();
-        this.setCenter(mainStackPane);
+        this.setCenter(this.getMainStackPane());
         this.setSize();
         
         String line;
@@ -84,7 +85,7 @@ public class Board extends BorderPane{
                         //Checks if the player who gave the hint is the current player
                         if(blocks [y] [x].getSelected() && isClear){
                             tri.setVisible(false);
-                        }else if(Runner.activePlayer.getIsLeader()){
+                        }else if(Runner.getActivePlayer().getIsLeader()){
                             
                             //Updates to 0 for next round
                             iRounds = 0;
@@ -96,17 +97,38 @@ public class Board extends BorderPane{
                                     points.setMaxSize(20, 20);
                                     points.setMinSize(20, 20);
                                     points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
-                                    int score = scoreBlocks(y, x, l, k);
+                                    score = scoreBlocks(y, x, l, k);
+                                    //Checks the players and compares them to the playe whoe selected the block
+                                    //If so adds the score to the given player 
+                                    for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
+                                        Runner.activePlayer = Runner.getPlayers().get(iCountPlayers);
+                                        if(Runner.activePlayer.getName().equals(blocks [l] [k].getSelectedBy())){
+                                            System.out.println(Runner.getPlayers().get(iCountPlayers).getName()
+                                                    + ": " + Runner.getPlayers().get(iCountPlayers).getScore() + " + " + score);
+                                            Runner.getPlayers().get(iCountPlayers).setScore(Runner.getPlayers().get(iCountPlayers).getScore() + score);
+                                            if(score>1){
+                                                int newScoreCue = Runner.getPlayers().get(Runner.iPlayers).getScore();
+                                                Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
+                                            }
+                                        }
+                                    }
                                     String scr = "" + score;
                                     points.setText(scr + " ");
                                     if(score == 0){
                                         points.setVisible(false);
+                                    }else{
+                                        //Test Runner.activePlayer.setScore(score);
                                     }
                                     getScoreGp().add(points, l+1, k+1);
                                     getScoreGp().setDisable(false);
+                                    score = 0;
                                 }
-                                System.out.print("\n");
                             }
+                            
+                            for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
+                                System.out.println(Runner.getPlayers().get(iCountPlayers).getScore());
+                            }
+                            
                             getScoreGp().toFront();
                             
                             
@@ -116,8 +138,7 @@ public class Board extends BorderPane{
                                 index = 0;
                             }
                             
-                             //Alerts the new cuegiver of their new status
-                            Runner.userInput.showAlertWindow(Runner.players.get(index).getName() + " is the cue-giver");
+                            Runner.userInput.showAlertWindow(Runner.getPlayers().get(index).getName() + " is the cue-giver");
                             
                             //Shows Scoring Board for 10 seconds
                             try{
@@ -131,28 +152,28 @@ public class Board extends BorderPane{
                             
                             clearBlocks();
                             //Changes the hint-giver to the next player
-                            Runner.players.get(Runner.iPlayers).setIsLeader(false);
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(false);
                             Runner.iPlayers++;
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.players.get(Runner.iPlayers).setIsLeader(true);
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(true);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                             
                             
                             //Asks the hint-giver for their first hint
-                            Runner.game.changeHint(Runner.askFirstHint());
+                            Runner.getGame().changeHint(Runner.askFirstHint());
                             Runner.iPlayers++;
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                         }
                         //Used to put the pieces of the other players
                         else{
-                            setAsSelected(y, x);
+                            setAsSelected(y, x, Runner.getActivePlayer().getName());
                             //Sets a triangle 
-                            tri.setFill(Runner.activePlayer.getColor());
+                            tri.setFill(Runner.getActivePlayer().getColor());
                             tri.setVisible(true);
                             //Changes the current player
                             Runner.iPlayers++;
@@ -160,31 +181,31 @@ public class Board extends BorderPane{
                             if(Runner.iPlayers == nPlayers){
                                 Runner.iPlayers = 0;
                             }
-                            Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                             //If the current player is detected as the hint-giver
                             //Asks for a hint without need of pressing anything
-                            if(Runner.activePlayer.getIsLeader() && iRounds == 0){
+                            if(Runner.getActivePlayer().getIsLeader() && iRounds == 0){
                                 //Updates the round pointing that a full round has passed
                                 iRounds++;
                                 try {
                                     //Asks if they want to give another hint
-                                    Runner.userInput.askForAnotherHint();
+                                    Runner.getUserInput().askForAnotherHint();
                                 } catch (Exception ex) {
                                     Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 //If yes they give another hint and the hint is updated
-                                if(Runner.userInput.getHintConfirm()){
-                                    Runner.game.changeHint(Runner.askAnotherHint());
+                                if(Runner.getUserInput().getHintConfirm()){
+                                    Runner.getGame().changeHint(Runner.askAnotherHint());
                                     Runner.iPlayers++;
-                                    if(Runner.iPlayers == nPlayers){
-                                        Runner.iPlayers = 0;
+                                    if(Runner.getiPlayers() == nPlayers){
+                                        Runner.setiPlayers(0);
                                     }
-                                    Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                                    Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
                                 }
                             }
                             //Else it's ignored and he can select the correct block
                             else if(Runner.activePlayer.getIsLeader() && iRounds != 0)
-                                Runner.userInput.showAlertWindow(Runner.activePlayer.getName() + " choose the correct block");
+                                Runner.getUserInput().showAlertWindow(Runner.getActivePlayer().getName() + " choose the correct block");
                         }
                     }
                 });
@@ -299,9 +320,9 @@ public class Board extends BorderPane{
     }
     
     //Grabs a ColorBlock and sets it as selected
-    private void setAsSelected(int j, int i){
+    private void setAsSelected(int j, int i, String name){
         blocks [j] [i].setAsSelected();
-        blocks [j] [i].setSelectedBy();
+        blocks [j] [i].setSelectedBy(name);
     }
     
     //Grbas a ColorBlock and resets selections
@@ -317,7 +338,7 @@ public class Board extends BorderPane{
             for(int l = 0; l < 30; l++){
                 if(blocks [l] [k].getSelected())
                     blocks [l] [k].fire();
-                blocks [l] [k].clearSelected();
+                clearSelected(l, k);
             }
         }
         isClear = false;

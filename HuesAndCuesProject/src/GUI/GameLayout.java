@@ -8,6 +8,7 @@ package GUI;
 import java.awt.Dimension;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -56,7 +57,8 @@ public class GameLayout extends BorderPane{
         hintGrid.add(hint,0,0);
         hintGrid.setAlignment(Pos.CENTER);
         this.setBottom(hintGrid);
-      
+        
+        //Adds main sizes
         mainGp.setMinSize(660, 500);
         mainGp.setMaxSize(660, 500);
         
@@ -97,5 +99,6 @@ public class GameLayout extends BorderPane{
     private void setBoard(int nPlayers) throws Exception {
         this.board = new Board(nPlayers);
     }  
+    
 }
 
