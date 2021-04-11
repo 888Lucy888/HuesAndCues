@@ -70,8 +70,7 @@ public class GameLayout extends BorderPane{
         this.setMaxSize(LENGTH, HEIGHT);
     }
     
-
-    public void setHint(){
+    private void setHint(){
         this.hint = new Label();
     }
     
@@ -87,7 +86,7 @@ public class GameLayout extends BorderPane{
         return scoreBoard;
     }
 
-    public void setScoreBoard() throws Exception {
+    private void setScoreBoard() throws Exception {
         this.scoreBoard = new ScoreBoard();
     }
 
@@ -95,7 +94,7 @@ public class GameLayout extends BorderPane{
         return board;
     }
 
-    public void setBoard(int nPlayers) throws Exception {
+    private void setBoard(int nPlayers) throws Exception {
         this.board = new Board(nPlayers);
     }  
 }
