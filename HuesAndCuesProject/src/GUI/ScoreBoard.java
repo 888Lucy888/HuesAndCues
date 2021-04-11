@@ -14,6 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
 /**
  *
@@ -26,10 +29,12 @@ public class ScoreBoard extends BorderPane{
     private final int BLOCKHEIGHT = 50;
     private final int BLOCKLENGTH = 20;
     
-    public ScoreBoard() throws Exception{
+    private GridPane scoreGp;
+    
+    public ScoreBoard(int numberOfPlayers) throws Exception{
         
         this.setSize();
-        GridPane scoreGp = new GridPane();
+        this.setScoreGp();
         
         //Reads colors to make ColorBlocks
         FileReader fr = new FileReader("colorScoreMatrix.csv");
@@ -41,8 +46,25 @@ public class ScoreBoard extends BorderPane{
             String[] tempArray = line.split(",");
             for(int i=0; i<25; i++){
                 ColorBlock tempColorBlock = new ColorBlock(tempArray[i]);
+                VBox scoreTri = new VBox();
+                //Creates player's scoring triangles
+                for(int k=0; k<numberOfPlayers; k++){
+                    Polygon tri = new Polygon();
+                    tri.getPoints().addAll(new Double[]{
+                        0.0, 10.0,
+                        5.0, 0.0,
+                        10.0, 10.0
+                    });
+                    tri.setFill(Color.BLACK);
+                    tri.setVisible(false);
+                    scoreTri.setMaxSize(BLOCKLENGTH,BLOCKHEIGHT);
+                    scoreTri.setMinSize(BLOCKLENGTH,BLOCKHEIGHT);
+                    scoreTri.getChildren().add(tri);
+                    scoreTri.setAlignment(Pos.CENTER);
+                }
                 tempColorBlock.setSize(BLOCKLENGTH, BLOCKHEIGHT);
-                scoreGp.add(tempColorBlock, i, j);
+                this.getScoreGp().add(tempColorBlock, i, j);
+                this.getScoreGp().add(scoreTri, i, j);
             }
             j++;
         }
@@ -56,7 +78,7 @@ public class ScoreBoard extends BorderPane{
             tempNumber.setMinSize(20, 50);
             tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
             GridPane.setConstraints(tempNumber, cont-1, 0);
-            scoreGp.getChildren().add(tempNumber);
+            this.getScoreGp().getChildren().add(tempNumber);
         }
         for(int cont=5; cont<26; cont+=5){
             String number = String.valueOf(55-cont);
@@ -66,11 +88,11 @@ public class ScoreBoard extends BorderPane{
             tempNumber.setMinSize(20, 50);
             tempNumber.setStyle("-fx-text-fill: white; -fx-font-weight: bold");            
             GridPane.setConstraints(tempNumber, cont-5, 1);
-            scoreGp.getChildren().add(tempNumber);
+            this.getScoreGp().getChildren().add(tempNumber);
         }
 
-        scoreGp.setAlignment(Pos.CENTER);
-        this.setLeft(scoreGp);  
+        this.getScoreGp().setAlignment(Pos.CENTER);
+        this.setLeft(this.getScoreGp());  
         
         //Adds the Logo
         Image logo = new Image(new FileInputStream("HuesAndCuesLogo.jpg"));
@@ -88,4 +110,16 @@ public class ScoreBoard extends BorderPane{
         this.setMinSize(LENGTH, HEIGHT);
         this.setMaxSize(LENGTH, HEIGHT);
     }
+
+    public GridPane getScoreGp() {
+        return scoreGp;
+    }
+
+    private void setScoreGp() {
+        this.scoreGp = new GridPane();
+    }
+    
+    
+    
+    
 }

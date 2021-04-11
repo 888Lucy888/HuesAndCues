@@ -39,7 +39,7 @@ public class GameLayout extends BorderPane{
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
         
-        this.setScoreBoard();
+        this.setScoreBoard(nPlayers);
         this.setBoard(nPlayers);
 
         mainGp.add(this.getScoreBoard(), 0, 0);
@@ -86,8 +86,8 @@ public class GameLayout extends BorderPane{
         return scoreBoard;
     }
 
-    private void setScoreBoard() throws Exception {
-        this.scoreBoard = new ScoreBoard();
+    private void setScoreBoard(int nOfPlayers) throws Exception {
+        this.scoreBoard = new ScoreBoard(nOfPlayers);
     }
 
     public Board getBoard() {
