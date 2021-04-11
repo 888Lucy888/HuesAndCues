@@ -8,6 +8,7 @@ package GUI;
 import huesandcuesproject.Runner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -27,8 +28,9 @@ import javafx.scene.shape.Polygon;
 public class Board extends BorderPane{
     
     public static ColorBlock [][] blocks = new ColorBlock [30] [16];
-    private static Label [][] points = new Label [30] [16];
+    private StackPane mainStackPane;
     private GridPane gp;
+    private GridPane scoreGp;
     private int iPlayers = 0;
     private final int HEIGHT = 360;
     private final int LENGTH = 640;
@@ -36,8 +38,11 @@ public class Board extends BorderPane{
     
     public Board (int nPlayers) throws Exception{
         
-        this.setSize();
         this.setGp();
+        this.setScoreGp();
+        this.setMainStackPane();
+        this.setCenter(mainStackPane);
+        this.setSize();
         
         String line;
         
@@ -47,13 +52,7 @@ public class Board extends BorderPane{
         while((line = br.readLine()) != null){
             String [] seperator = line.split(",");
             for(int j = 0; j < 30; j++){
-                //Creates StackPane for each ColorBlock
                 StackPane sp = new StackPane();
-                
-                //Creates a label for showing points
-                this.setPoints(j, i);
-                
-                //Creates 
                 Polygon tri = new Polygon();
                 tri.getPoints().addAll(new Double[]{
                    0.0, 0.0,
@@ -70,8 +69,6 @@ public class Board extends BorderPane{
                 String number = String.valueOf(j+1);
                 blocks[j][i].setPosition(letter, number);
                 
-                
-                sp.getChildren().add(this.getPoints(j, i));
                 sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
@@ -92,16 +89,33 @@ public class Board extends BorderPane{
                             for(int k = 0; k < 16; k++){
                                 for(int l = 0; l < 30; l++){
                                     //Does the needed Scoring and shows it to the players
+                                    Label points = new Label();
+                                    points.setAlignment(Pos.CENTER);
+                                    points.setMaxSize(20, 20);
+                                    points.setMinSize(20, 20);
+                                    points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
                                     int score = scoreBlocks(y, x, l, k);
                                     String scr = "" + score;
-                                    Label tempPoints = getPoints(l, k);
-                                    tempPoints.setText(scr + " ");
-                                    if(score != 0){
-                                        tempPoints.setVisible(true);
+                                    points.setText(scr + " ");
+                                    if(score == 0){
+                                        points.setVisible(false);
                                     }
+                                    getScoreGp().add(points, l+1, k+1);
+                                    getScoreGp().setDisable(false);
                                 }
                                 System.out.print("\n");
                             }
+                            getScoreGp().toFront();
+                            //Shows Scoring Board for 10 seconds
+                            try{
+                                TimeUnit.SECONDS.sleep(10);
+                            }catch(InterruptedException ex){
+                                Logger.getLogger(Board.class.getName()).log(Level.SEVERE,null, ex);
+                            }
+                            
+                            //Resets ScoringBoard
+                            //resetScore();
+                            
                             clearBlocks();
                             //Changes the hint-giver to the next player
                             Runner.players.get(Runner.iPlayers).setIsLeader(false);
@@ -111,6 +125,8 @@ public class Board extends BorderPane{
                             }
                             Runner.players.get(Runner.iPlayers).setIsLeader(true);
                             Runner.activePlayer = Runner.players.get(Runner.iPlayers);
+                            
+                            
                             //Asks the hint-giver for their first hint
                             Runner.game.changeHint(Runner.askFirstHint());
                             Runner.iPlayers++;
@@ -210,7 +226,6 @@ public class Board extends BorderPane{
         gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
         
-        this.setCenter(gp);
         
         
         //while(!br.readLine().isEmpty()){
@@ -294,23 +309,39 @@ public class Board extends BorderPane{
     public GridPane getGp() {
         return gp;
     }
-    
 
     private void setGp() {
         this.gp = new GridPane();
     }
-
-    public Label getPoints(int j, int i) {
-        return points[j][i];
+    
+    public GridPane getScoreGp() {
+        return scoreGp;
     }
 
-    public void setPoints(int j, int i){
-        Label po = new Label();
-        po.setAlignment(Pos.CENTER);
-        po.setMaxSize(20, 20);
-        po.setMinSize(20, 20);
-        po.setStyle("-fx-text-color: black; -fx-font-weight: bold");
-        this.points[j][i] = po;
-    }        
+    private void setScoreGp() {
+        this.scoreGp = new GridPane();
+        this.setCenter(scoreGp);
+        Label space = new Label(".");
+        space.setMinSize(20, 20);
+        this.scoreGp.add(space, 0, 0);
+        this.scoreGp.setDisable(true);
+    }
+    
+    private void resetScore(){
+        this.scoreGp.setDisable(true);
+        this.scoreGp.toBack();
+        //this.scoreGp.getChildren().removeAll();
+    }
+
+    public StackPane getMainStackPane() {
+        return mainStackPane;
+    }
+
+    public void setMainStackPane() {
+        this.mainStackPane = new StackPane();
+        this.mainStackPane.getChildren().add(gp);
+        this.mainStackPane.getChildren().add(scoreGp);
+    }
+    
     
 }
