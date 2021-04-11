@@ -27,6 +27,7 @@ import javafx.scene.shape.Polygon;
 public class Board extends BorderPane{
     
     public static ColorBlock [][] blocks = new ColorBlock [30] [16];
+    private static Label [][] points = new Label [30] [16];
     private GridPane gp;
     private int iPlayers = 0;
     private final int HEIGHT = 360;
@@ -46,8 +47,13 @@ public class Board extends BorderPane{
         while((line = br.readLine()) != null){
             String [] seperator = line.split(",");
             for(int j = 0; j < 30; j++){
+                //Creates StackPane for each ColorBlock
                 StackPane sp = new StackPane();
-                Label txtScore = new Label();
+                
+                //Creates a label for showing points
+                this.setPoints(j, i);
+                
+                //Creates 
                 Polygon tri = new Polygon();
                 tri.getPoints().addAll(new Double[]{
                    0.0, 0.0,
@@ -64,9 +70,10 @@ public class Board extends BorderPane{
                 String number = String.valueOf(j+1);
                 blocks[j][i].setPosition(letter, number);
                 
+                
+                sp.getChildren().add(this.getPoints(j, i));
                 sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
-                sp.getChildren().add(txtScore);
                 tri.setVisible(false);
                 
                 final int y = j;
@@ -78,22 +85,20 @@ public class Board extends BorderPane{
                         //Checks if the player who gave the hint is the current player
                         if(blocks [y] [x].getSelected()){
                             tri.setVisible(false);
-                            GridPane scoringPane = new GridPane();
-                            scoringPane.setMaxSize(20, 20);
-                            scoringPane.setMinSize(20, 20);
-                            scoringPane.setStyle("fx-background-color: white");
-                            scoringPane.setAlignment(Pos.CENTER);
-                            scoringPane.getChildren().add(new Label("Hello"));
-                            getGp().add(scoringPane, x, y);
                         }else if(Runner.activePlayer.getIsLeader()){
+                            
                             //Updates to 0 for next round
                             iRounds = 0;
                             for(int k = 0; k < 16; k++){
                                 for(int l = 0; l < 30; l++){
-                                    //Does the needed Scoring
+                                    //Does the needed Scoring and shows it to the players
                                     int score = scoreBlocks(y, x, l, k);
                                     String scr = "" + score;
-                                    System.out.print(scr + " ");
+                                    Label tempPoints = getPoints(l, k);
+                                    tempPoints.setText(scr + " ");
+                                    if(score != 0){
+                                        tempPoints.setVisible(true);
+                                    }
                                 }
                                 System.out.print("\n");
                             }
@@ -289,11 +294,23 @@ public class Board extends BorderPane{
     public GridPane getGp() {
         return gp;
     }
+    
 
     private void setGp() {
         this.gp = new GridPane();
     }
-    
-    
+
+    public Label getPoints(int j, int i) {
+        return points[j][i];
+    }
+
+    public void setPoints(int j, int i){
+        Label po = new Label();
+        po.setAlignment(Pos.CENTER);
+        po.setMaxSize(20, 20);
+        po.setMinSize(20, 20);
+        po.setStyle("-fx-text-color: black; -fx-font-weight: bold");
+        this.points[j][i] = po;
+    }        
     
 }
