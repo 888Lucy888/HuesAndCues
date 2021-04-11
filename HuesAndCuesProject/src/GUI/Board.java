@@ -119,9 +119,10 @@ public class Board extends BorderPane{
                                     }else{
                                         //Test Runner.activePlayer.setScore(score);
                                     }
+                                    
                                     getScoreGp().add(points, l+1, k+1);
-                                    getScoreGp().setDisable(false);
                                     score = 0;
+                                    
                                 }
                             }
                             
@@ -362,13 +363,11 @@ public class Board extends BorderPane{
         Label space = new Label(".");
         space.setMinSize(20, 20);
         this.scoreGp.add(space, 0, 0);
-        this.scoreGp.setDisable(true);
     }
     
     private void resetScore(){
-        this.scoreGp.setDisable(true);
+        this.scoreGp.getChildren().clear();
         this.scoreGp.toBack();
-        //this.scoreGp.getChildren().removeAll();
     }
 
     public StackPane getMainStackPane() {
@@ -377,8 +376,8 @@ public class Board extends BorderPane{
 
     public void setMainStackPane() {
         this.mainStackPane = new StackPane();
-        this.mainStackPane.getChildren().add(gp);
         this.mainStackPane.getChildren().add(scoreGp);
+        this.mainStackPane.getChildren().add(gp);
     }
     
     
