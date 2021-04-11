@@ -8,6 +8,7 @@ package GUI;
 import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  *

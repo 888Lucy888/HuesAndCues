@@ -49,6 +49,7 @@ public class Board extends BorderPane{
             String [] seperator = line.split(",");
             for(int j = 0; j < 30; j++){
                 StackPane sp = new StackPane();
+                Label txtScore = new Label();
                 Polygon tri = new Polygon();
                 tri.getPoints().addAll(new Double[]{
                    0.0, 0.0,
@@ -67,6 +68,7 @@ public class Board extends BorderPane{
                 
                 sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
+                sp.getChildren().add(txtScore);
                 tri.setVisible(false);
                 
                 final int y = j;
@@ -80,6 +82,14 @@ public class Board extends BorderPane{
                             //Updates to 0 for next round
                             iRounds = 0;
                             //TODO add scoring
+                            for(int k = 0; k < 16; k++){
+                                for(int l = 0; l < 30; l++){
+                                    int score = scoreBlocks(y, x, l, k);
+                                    String scr = "" + score;
+                                    System.out.print(scr + " ");
+                                }
+                                System.out.print("\n");
+                            }
                             System.out.println("You selected the correct color");
                             //Changes the hint-giver to the next player
                             Runner.players.get(Runner.iPlayers).setIsLeader(false);
@@ -212,9 +222,31 @@ public class Board extends BorderPane{
         return Character.toString(alphabet[i]);
     }
     
-    private int scoreBlocks(ColorBlock correct, ColorBlock guessed){
+    private int scoreBlocks(int y, int x, int l, int k){
         int score = 0;
-        
+        int maxDistance;
+        int distanceX = blocks [y] [x].getPosX() - blocks [l] [k].getPosX();
+        int distanceY = blocks [y] [x].getPosY() - blocks [l] [k].getPosY();
+        if(distanceX<0) distanceX *= -1;
+        if(distanceY<0) distanceY *= -1;
+        if(distanceY > distanceX)
+            maxDistance = distanceY;
+        else
+            maxDistance = distanceX;
+        switch(maxDistance){
+            case 0:
+                score = 3;
+                break;
+            case 1:
+                score = 2;
+                break;
+            case 2:
+                score = 1;
+                break;
+            default:
+                score = 0;
+                break;
+        }
         return score;
     }
     
