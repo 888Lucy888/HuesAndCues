@@ -21,31 +21,33 @@ import javafx.scene.layout.GridPane;
  */
 public class ScoreBoard extends BorderPane{
     
-    private final int height = 100;
-    private final int length = 600;
-    private final int blockHeight = 50;
-    private final int blockLength = 20;
+    private final int HEIGHT = 100;
+    private final int LENGTH = 600;
+    private final int BLOCKHEIGHT = 50;
+    private final int BLOCKLENGTH = 20;
     
     public ScoreBoard() throws Exception{
         
         this.setSize();
-        
         GridPane scoreGp = new GridPane();
+        
+        //Reads colors to make ColorBlocks
         FileReader fr = new FileReader("colorScoreMatrix.csv");
         BufferedReader br = new BufferedReader(fr);
         String line;
         int j=0;
+        //Creates colorblocks and resizes them
         while((line = br.readLine()) != null){
             String[] tempArray = line.split(",");
             for(int i=0; i<25; i++){
                 ColorBlock tempColorBlock = new ColorBlock(tempArray[i]);
-                tempColorBlock.setSize(blockLength, blockHeight);
+                tempColorBlock.setSize(BLOCKLENGTH, BLOCKHEIGHT);
                 scoreGp.add(tempColorBlock, i, j);
             }
             j++;
         }
         
-        //Adding numbers on scoreboard
+        //Adds numbers on scoreboard
         for(int cont=5; cont<26; cont+=5){
             String number = String.valueOf(cont);
             Label tempNumber = new Label(number);
@@ -70,7 +72,7 @@ public class ScoreBoard extends BorderPane{
         scoreGp.setAlignment(Pos.CENTER);
         this.setLeft(scoreGp);  
         
-        //Adding the Logo
+        //Adds the Logo
         Image logo = new Image(new FileInputStream("HuesAndCuesLogo.jpg"));
         ImageView imageView = new ImageView(logo);
         imageView.setFitHeight(120); 
@@ -83,7 +85,7 @@ public class ScoreBoard extends BorderPane{
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
 }

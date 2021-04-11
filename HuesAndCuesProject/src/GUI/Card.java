@@ -14,13 +14,14 @@ import javafx.scene.layout.HBox;
  * @author Lucy
  */
 public class Card extends HBox{
-    
+ 
     private static int index = 0;
     private static int indexj = 0;
     private ArrayList<String> colors;
     private ArrayList<String> positions;
     
     public Card(List<ColorBlock> shuffledColors){
+        //Returns 4 colorblocks from the already shuffled list
         this.setColors();
         this.setPositions();
         for(int i=0;i<4;i++){
@@ -51,6 +52,7 @@ public class Card extends HBox{
     */
     
     public String toHTML(){
+        //Converts the colors and posiitions from the 4 colorblocks into HTML so the card may be sent via mail
         String html;
         html = ""
             + "<html>"

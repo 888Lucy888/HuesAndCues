@@ -31,8 +31,9 @@ public class Board extends BorderPane{
     
     public static ColorBlock [][] blocks = new ColorBlock [30] [16];
     private GridPane gp;
-    private final int height = 360;
-    private final int length = 640;
+    private int iPlayers = 0;
+    private final int HEIGHT = 360;
+    private final int LENGTH = 640;
     public int iRounds = 0;
     
     public Board (int nPlayers) throws Exception{
@@ -81,9 +82,9 @@ public class Board extends BorderPane{
                         if(Runner.activePlayer.getIsLeader()){
                             //Updates to 0 for next round
                             iRounds = 0;
-                            //TODO add scoring
                             for(int k = 0; k < 16; k++){
                                 for(int l = 0; l < 30; l++){
+                                    //Does the needed Scoring
                                     int score = scoreBlocks(y, x, l, k);
                                     String scr = "" + score;
                                     System.out.print(scr + " ");
@@ -202,8 +203,8 @@ public class Board extends BorderPane{
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
 
     public ColorBlock[][] getBlocks() {
@@ -222,6 +223,7 @@ public class Board extends BorderPane{
         return Character.toString(alphabet[i]);
     }
     
+    //Scores blocks based on distance
     private int scoreBlocks(int y, int x, int l, int k){
         int score = 0;
         int maxDistance;
@@ -250,11 +252,13 @@ public class Board extends BorderPane{
         return score;
     }
     
+    //Grabs a ColorBlock and sets it as selected
     private void setAsSelected(int j, int i){
         blocks [j] [i].setAsSelected();
         blocks [j] [i].setSelectedBy();
     }
     
+    //Grbas a ColorBlock and resets selections
     private void clearSelected(int j, int i){
         blocks [j] [i].clearSelected();
         blocks [j] [i].clearSelectedBy();
