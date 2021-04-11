@@ -19,24 +19,24 @@ import javax.mail.internet.MimeMessage;
  */
 public class MailSender {
     public static void sendTo(String email, String text){
-        
-            Properties proporties = new Properties();
-            proporties.put("mail.smtp.auth", "true");
-            proporties.put("mail.smtp.starttls.enable", "true");
-            proporties.put("mail.smtp.host", "smtp.gmail.com");
-            proporties.put("mail.smtp.port", 587);
-            
-            String myEmail = "HuesAndCuesUP@gmail.com";
-            String password = "UPOOP2021";
-            
-            Session session = Session.getInstance(proporties, new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication(){
-                    return new PasswordAuthentication(myEmail, password);
-                }
-            });
-            
-            setMessage(text, email, session);
+
+        Properties proporties = new Properties();
+        proporties.put("mail.smtp.auth", "true");
+        proporties.put("mail.smtp.starttls.enable", "true");
+        proporties.put("mail.smtp.host", "smtp.gmail.com");
+        proporties.put("mail.smtp.port", 587);
+
+        String myEmail = "HuesAndCuesUP@gmail.com";
+        String password = "UPOOP2021";
+
+        Session session = Session.getInstance(proporties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(myEmail, password);
+            }
+        });
+
+        setMessage(text, email, session);
     }
     
 //    public static void sendCard(String email, ColorBlock color){
