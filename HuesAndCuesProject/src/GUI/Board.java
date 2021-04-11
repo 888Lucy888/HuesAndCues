@@ -105,6 +105,9 @@ public class Board extends BorderPane{
                             //Asks the hint-giver for their first hint
                             Runner.game.changeHint(Runner.askFirstHint());
                             Runner.iPlayers++;
+                            if(Runner.iPlayers == nPlayers){
+                                Runner.iPlayers = 0;
+                            }
                             Runner.activePlayer = Runner.players.get(Runner.iPlayers);
                         }
                         //Used to put the pieces of the other players
