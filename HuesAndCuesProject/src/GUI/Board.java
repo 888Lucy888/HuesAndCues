@@ -394,7 +394,7 @@ public class Board extends BorderPane{
         return mainStackPane;
     }
 
-    public void setMainStackPane() {
+    private void setMainStackPane() {
         this.mainStackPane = new StackPane();
         //this.mainStackPane.getChildren().add(scoreGp);
         this.mainStackPane.getChildren().add(gp);

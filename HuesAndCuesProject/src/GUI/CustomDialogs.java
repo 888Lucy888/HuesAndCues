@@ -141,7 +141,7 @@ public class CustomDialogs{
         dialog.initStyle(StageStyle.UNDECORATED);
         
         dialog.setTitle("Hint");
-        dialog.setHeaderText("CHECK YOUR EMAIL FOR YOUR CARD... After you have chosen a color, enter a one word hint:");
+        dialog.setHeaderText("CHECK YOUR EMAIL FOR YOUR CARD... \nAfter you have chosen a color, enter a one word hint: \n\n IMPORTANT: After everyone guesses please click on the color you selected from the card to check everyone's score");
         
         Optional <String> result = dialog.showAndWait();
         
