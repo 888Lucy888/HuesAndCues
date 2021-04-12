@@ -101,7 +101,7 @@ public class Board extends BorderPane{
                                     points.setMinSize(20, 20);
                                     points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
                                     score = scoreBlocks(y, x, l, k);
-                                    //Checks the players and compares them to the playe whoe selected the block
+                                    //Checks the players and compares them to the playe who selected the block
                                     //If so adds the score to the given player 
                                     for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
                                         //Checks if the player selected the block
@@ -152,6 +152,8 @@ public class Board extends BorderPane{
                             
                             //Resets ScoringBoard
                             resetScore();
+                            //Updates Score
+                            Runner.getGame().getScoreBoard().updateScoreBoard();
                             
                             clearBlocks();
                             //Changes the hint-giver to the next player

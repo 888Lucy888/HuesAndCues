@@ -63,7 +63,7 @@ public class ScoreBoard extends BorderPane{
                         8.0, 8.0
                     });
                     tri.setFill(Runner.getPlayers().get(k).getColor());
-                    tri.setVisible(false);
+                    tri.setVisible(true);
                     scoreTri.setMaxSize(BLOCKLENGTH,BLOCKHEIGHT);
                     scoreTri.setMinSize(BLOCKLENGTH,BLOCKHEIGHT);
                     scoreTri.getChildren().add(tri);
