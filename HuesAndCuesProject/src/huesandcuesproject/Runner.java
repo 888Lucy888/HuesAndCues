@@ -162,10 +162,6 @@ public class Runner extends Application {
         Runner.iPlayers = iPlayers;
     }
     
-    public static void updatePlayers(int index){
-        Runner.players.get(index).setScore(Runner.activePlayer.getScore());
-    }
-    
     public static void limitReached(){
         Player best = null;
         for(int i = 0; i < nOfPlayers; i++){
