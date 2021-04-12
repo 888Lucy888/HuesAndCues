@@ -8,6 +8,7 @@ package GUI;
 import java.awt.Dimension;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -25,38 +26,29 @@ import javafx.scene.transform.Scale;
  */
 public class GameLayout extends BorderPane{
     
-    private static Label hint;
-    
-    //public GameLayout(int nPlayers) throws Exception{
-        
-        //Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        //double length = screenSize.getWidth() / 10;
-        //double height = screenSize.getHeight() / 10;
+    private Label hint;
   
-    private final double length = 800;
-    private final double height = 620;
+    private final double LENGTH = 800;
+    private final double HEIGHT = 620;
     public ScoreBoard scoreBoard;
     public Board board;
     
     public GameLayout(int nPlayers) throws Exception{
         this.setSize();
+        this.setHint();
         
         GridPane mainGp = new GridPane();
         mainGp.setAlignment(Pos.CENTER);
         
-        this.setScoreBoard();
+        this.setScoreBoard(nPlayers);
         this.setBoard(nPlayers);
 
         mainGp.add(this.getScoreBoard(), 0, 0);
         mainGp.add(new Label(), 0, 1);
         mainGp.add(this.getBoard(), 0, 2);
-        //Board gameBoard = new Board();
-        //this.setCenter(gameBoard);
-        //ScoreBoard scoreBoard = new ScoreBoard();
-        //this.setTop(scoreBoard);
         this.setCenter(mainGp);
         
-        hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");;
+        hint.setStyle("-fx-text-fill: green; -fx-font-weight: bold");
         hint.setVisible(true);
         
         GridPane hintGrid = new GridPane();
@@ -66,55 +58,47 @@ public class GameLayout extends BorderPane{
         hintGrid.setAlignment(Pos.CENTER);
         this.setBottom(hintGrid);
         
+        //Adds main sizes
         mainGp.setMinSize(660, 500);
         mainGp.setMaxSize(660, 500);
         
         //Adding color;
         mainGp.setStyle("-fx-background-color: black");
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        /*
-        VBox numbers = new VBox();
-        HBox letters = new HBox();
-        for(int i=0; i<25; i++){
-            String letterString = this.getCharForNumber(i);
-            Label letter = new Label(letterString);
-            letter.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
-            letters.getChildren().add(letter);
-        }
-        letters.setSpacing(16);
-        letters.setAlignment(Pos.CENTER);
-        
-        mainGp.add(letters, 0, 1);
-        */
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
     
-    public static void setLBLHINT(Label label){
-        hint = label;
+    private void setHint(){
+        this.hint = new Label();
     }
     
-    public static Label getLBLHINT(){
-        return hint;
+    public void changeHint(String hintText){
+        this.hint.setText("HINT: "+hintText);
+    }
+    
+    public Label getHint(){
+        return this.hint;
     }
 
     public ScoreBoard getScoreBoard() {
         return scoreBoard;
     }
 
-    public void setScoreBoard() throws Exception {
-        this.scoreBoard = new ScoreBoard();
+    private void setScoreBoard(int nOfPlayers) throws Exception {
+        this.scoreBoard = new ScoreBoard(nOfPlayers);
     }
 
     public Board getBoard() {
         return board;
     }
 
-    public void setBoard(int nPlayers) throws Exception {
+    private void setBoard(int nPlayers) throws Exception {
         this.board = new Board(nPlayers);
     }  
+    
 }
 

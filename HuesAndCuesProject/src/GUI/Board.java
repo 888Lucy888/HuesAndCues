@@ -5,10 +5,13 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,7 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.transform.Scale;
 
 /**
  *
@@ -26,16 +28,27 @@ import javafx.scene.transform.Scale;
  */
 public class Board extends BorderPane{
     
-    private ColorBlock [][] blocks = new ColorBlock [30] [16];
+    public static ColorBlock [][] blocks = new ColorBlock [30] [16];
+    private StackPane mainStackPane;
     private GridPane gp;
+    private GridPane scoreGp;
     private int iPlayers = 0;
-    private final int height = 360;
-    private final int length = 640;
+    private final int HEIGHT = 360;
+    private final int LENGTH = 640;
+    public int iRounds = 0;
+    //Used to clear the board
+    private boolean isClear = false;
+    private int score = 0;
+    private int cycles = 0;
+    private int matches = 0;
     
     public Board (int nPlayers) throws Exception{
         
+        this.setGp();
+        this.setScoreGp();
+        this.setMainStackPane();
+        this.setCenter(this.getMainStackPane());
         this.setSize();
-        gp = new GridPane();
         
         String line;
         
@@ -45,6 +58,7 @@ public class Board extends BorderPane{
         while((line = br.readLine()) != null){
             String [] seperator = line.split(",");
             for(int j = 0; j < 30; j++){
+                //Creates Triangles Players can us to select their answer
                 StackPane sp = new StackPane();
                 Polygon tri = new Polygon();
                 tri.getPoints().addAll(new Double[]{
@@ -55,7 +69,9 @@ public class Board extends BorderPane{
                 tri.setFill(Color.BLACK);
                 
                 //Creates a ColorBlock
-                blocks [j] [i] = new ColorBlock(seperator[j]);
+                if(j==0 && i==0)
+                    seperator[j] = "53251A";
+                blocks [j] [i] = new ColorBlock(seperator[j], i, j);
                 
                 //Adds position to the ColorBlock
                 String letter = this.getLetterForNumber(i);
@@ -65,19 +81,160 @@ public class Board extends BorderPane{
                 sp.getChildren().add(blocks [j] [i]);
                 sp.getChildren().add(tri);
                 tri.setVisible(false);
+                
+                final int y = j;
+                final int x = i;
+                //Sets action for color block on click
                 blocks [j] [i].setOnAction(new EventHandler<ActionEvent>(){
                     @Override
                     public void handle(ActionEvent event){
-                        tri.setFill(Runner.activePlayer.getColor());
-                        tri.setVisible(true);
-                        iPlayers++;
-                        if(iPlayers == nPlayers)
-                            iPlayers = 0;
-                        Runner.activePlayer = Runner.players.get(iPlayers);
+                        //Checks if the player who gave the hint is the current player
+                        if(blocks [y] [x].getSelected() && isClear){
+                            tri.setVisible(false);
+                        }else if(Runner.getActivePlayer().getIsLeader()){
+                            
+                            //Updates to 0 for next round
+                            iRounds = 0;
+                            for(int k = 0; k < 16; k++){
+                                for(int l = 0; l < 30; l++){
+                                    
+                                    //Does the needed Scoring and shows it to the players
+                                    Label points = new Label();
+                                    points.setAlignment(Pos.CENTER);
+                                    points.setMaxSize(20, 20);
+                                    points.setMinSize(20, 20);
+                                    points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
+                                    score = scoreBlocks(y, x, l, k);
+                                    
+                                    //Adds the scoring grid
+                                    String scr = "" + score;
+                                    points.setText(scr + " ");
+                                    
+                                    blocks[l][k].setText(scr);
+                                    
+                                    if(score == 0){
+                                        points.setVisible(false);
+                                    }else{
+                                        //Checks the players and compares them to the playe whoe selected the block
+                                        //If so adds the score to the given player 
+                                        for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
+                                            //Checks if the player selected the block
+                                            Runner.activePlayer = Runner.getPlayers().get(iCountPlayers);
+                                            if(Runner.activePlayer.getId() == blocks [l] [k].getSelectedBy()){
+                                                Runner.getPlayers().get(iCountPlayers).setScore(Runner.getPlayers().get(iCountPlayers).getScore() + score);
+                                                if(score>1){
+                                                    Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
+                                                }
+                                            }
+                                            if(Runner.getPlayers().get(iCountPlayers).getScore() >= 50){
+                                                Player best = Runner.getPlayers().get(iCountPlayers);
+                                                Runner.winnerReached(best);
+                                            }
+                                        }
+                                    }
+                                    
+                                    getScoreGp().add(points, l+1, k+1);
+                                    
+                                    //Resets score
+                                    score = 0;
+                                    
+                                }
+                            }
+                            matches++;
+                            
+                            getMainStackPane().getChildren().add(getScoreGp());
+                            getScoreGp().toFront();
+                            getScoreGp().setVisible(true);
+                            
+                            //Alerts the player of the change in cue giver
+                            int index = Runner.iPlayers + 1;
+                            if(index == nPlayers){
+                                index = 0;
+                            }
+                            
+                            Runner.userInput.showAlertWindow(Runner.getPlayers().get(index).getName() + " is the cue-giver");
+                            
+                            //Shows Scoring Board for 10 seconds
+                            try{
+                                TimeUnit.SECONDS.sleep(10);
+                            }catch(InterruptedException ex){
+                                Logger.getLogger(Board.class.getName()).log(Level.SEVERE,null, ex);
+                            }
+                            
+                            //Resets ScoringBoard
+                            resetScore();
+                            //Updates Score
+                            Runner.getGame().getScoreBoard().updateScoreBoard();
+                            
+                            clearBlocks();
+                            //Changes the hint-giver to the next player
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(false);
+                            Runner.iPlayers++;
+                            if(Runner.iPlayers == nPlayers){
+                                cycles++;
+                                Runner.iPlayers = 0;
+                            }
+                            if(cycles==3){
+                                //Here we call the score screen to give a winner
+                                Runner.limitReached();
+                            }
+                            Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(true);
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
+                            
+                            
+                            //Asks the hint-giver for their first hint
+                            Runner.getGame().changeHint(Runner.askFirstHint());
+                            Runner.iPlayers++;
+                            if(Runner.iPlayers == nPlayers){
+                                Runner.iPlayers = 0;
+                            }
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
+                            
+                            getMainStackPane().getChildren().remove(getScoreGp());
+                            
+                        }
+                        //Used to put the pieces of the other players
+                        else{
+                            setAsSelected(y, x, Runner.getActivePlayer().getId());
+                            //Sets a triangle 
+                            tri.setFill(Runner.getActivePlayer().getColor());
+                            tri.setVisible(true);
+                            //Changes the current player
+                            Runner.iPlayers++;
+                            //Used if the max value of the array is reached
+                            if(Runner.iPlayers == nPlayers){
+                                Runner.iPlayers = 0;
+                            }
+                            Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
+                            //If the current player is detected as the hint-giver
+                            //Asks for a hint without need of pressing anything
+                            if(Runner.getActivePlayer().getIsLeader() && iRounds == 0){
+                                //Updates the round pointing that a full round has passed
+                                iRounds++;
+                                try {
+                                    //Asks if they want to give another hint
+                                    Runner.getUserInput().askForAnotherHint();
+                                } catch (Exception ex) {
+                                    Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                //If yes they give another hint and the hint is updated
+                                if(Runner.getUserInput().getHintConfirm()){
+                                    Runner.getGame().changeHint(Runner.askAnotherHint());
+                                    Runner.iPlayers++;
+                                    if(Runner.getiPlayers() == nPlayers){
+                                        Runner.setiPlayers(0);
+                                    }
+                                    Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
+                                }
+                            }
+                            //Else it's ignored and he can select the correct block
+                            else if(Runner.activePlayer.getIsLeader() && iRounds != 0)
+                                Runner.getUserInput().showAlertWindow(Runner.getActivePlayer().getName() + " choose the correct block");
+                        }
                     }
                 });
                 GridPane.setConstraints(sp, j+1, i+1);
-                gp.getChildren().add(sp);
+                this.getGp().getChildren().add(sp);
             }
             i++;
         }
@@ -129,17 +286,11 @@ public class Board extends BorderPane{
         gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
         
-        this.setCenter(gp);
-        
-        
-        //while(!br.readLine().isEmpty()){
-            //String colorCodes[] = br.readLine().split(" ");
-        //}    
     }
     
     private void setSize(){
-        this.setMinSize(length, height);
-        this.setMaxSize(length, height);
+        this.setMinSize(LENGTH, HEIGHT);
+        this.setMaxSize(LENGTH, HEIGHT);
     }
 
     public ColorBlock[][] getBlocks() {
@@ -156,6 +307,99 @@ public class Board extends BorderPane{
             return null;
         }
         return Character.toString(alphabet[i]);
+    }
+    
+    //Scores blocks based on distance
+    private int scoreBlocks(int y, int x, int l, int k){
+        int score = 0;
+        int maxDistance;
+        int distanceX = blocks [y] [x].getPosX() - blocks [l] [k].getPosX();
+        int distanceY = blocks [y] [x].getPosY() - blocks [l] [k].getPosY();
+        if(distanceX<0) distanceX *= -1;
+        if(distanceY<0) distanceY *= -1;
+        if(distanceY > distanceX)
+            maxDistance = distanceY;
+        else
+            maxDistance = distanceX;
+        switch(maxDistance){
+            case 0:
+                score = 3;
+                break;
+            case 1:
+                score = 2;
+                break;
+            case 2:
+                score = 1;
+                break;
+            default:
+                score = 0;
+                break;
+        }
+        return score;
+    }
+    
+    //Grabs a ColorBlock and sets it as selected
+    private void setAsSelected(int j, int i, int id){
+        blocks [j] [i].setAsSelected();
+        blocks [j] [i].setSelectedBy(id);
+    }
+    
+    //Grbas a ColorBlock and resets selections
+    private void clearSelected(int j, int i){
+        blocks [j] [i].clearSelected();
+        blocks [j] [i].clearSelectedBy();
+    }
+    
+    private void clearBlocks(){
+        //Clears all the blocks
+        isClear = true;
+        for(int k = 0; k < 16; k++){
+            for(int l = 0; l < 30; l++){
+                if(blocks [l] [k].getSelected())
+                    blocks [l] [k].fire();
+                clearSelected(l, k);
+            }
+        }
+        isClear = false;
+    }
+
+    public GridPane getGp() {
+        return gp;
+    }
+
+    private void setGp() {
+        this.gp = new GridPane();
+    }
+    
+    public GridPane getScoreGp() {
+        return scoreGp;
+    }
+
+    private void setScoreGp() {
+        this.scoreGp = new GridPane();
+        this.setCenter(scoreGp);
+        Label space = new Label(".");
+        space.setMinSize(20, 20);
+        this.scoreGp.add(space, 0, 0);
+    }
+    
+    private void resetScore(){
+        this.scoreGp.setVisible(false);
+        this.scoreGp.getChildren().clear();
+        this.scoreGp.toBack();
+        Label space = new Label(".");
+        space.setMinSize(20, 20);
+        this.scoreGp.add(space, 0, 0);
+    }
+
+    public StackPane getMainStackPane() {
+        return mainStackPane;
+    }
+
+    private void setMainStackPane() {
+        this.mainStackPane = new StackPane();
+        //this.mainStackPane.getChildren().add(scoreGp);
+        this.mainStackPane.getChildren().add(gp);
     }
     
     

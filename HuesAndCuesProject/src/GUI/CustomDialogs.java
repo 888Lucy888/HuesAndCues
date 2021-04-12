@@ -31,119 +31,198 @@ public class CustomDialogs{
     
     private int nPlayers;
     private Player player;
+    //Boolean that stores if they want another hint
+    private boolean confirm;
     
     public void getNumberOfUsers() throws Exception{
         final String [] values = { "3", "4", "5", "6", "7", "8", "9", "10" };
-//        List<String> dialogValues;
-//        dialogValues = Arrays.asList(values);
-//        ChoiceDialog<String> chooseNumberOfUsers;
-                List<String> dialogValues;
-                dialogValues = Arrays.asList(values);
-                ChoiceDialog<String> chooseNumberOfUsers;
-                chooseNumberOfUsers = new ChoiceDialog<String>(dialogValues.get(0), dialogValues);
-                chooseNumberOfUsers.setHeaderText("Select number of players");
-                chooseNumberOfUsers.initStyle(StageStyle.UNDECORATED);
-                Optional <String> result = chooseNumberOfUsers.showAndWait();
-                if(result.isPresent())
-                    Runner.nOfPlayers = Integer.parseInt(result.get());
+        List<String> dialogValues;
+        dialogValues = Arrays.asList(values);
+        ChoiceDialog<String> chooseNumberOfUsers;
+        chooseNumberOfUsers = new ChoiceDialog<String>(dialogValues.get(0), dialogValues);
+        chooseNumberOfUsers.setHeaderText("Select number of players");
+        chooseNumberOfUsers.initStyle(StageStyle.UNDECORATED);
+        Optional <String> result = chooseNumberOfUsers.showAndWait();
+        if(result.isPresent())
+              Runner.nOfPlayers = Integer.parseInt(result.get());
     }
     
-    public void createNewPlayer() throws Exception{
-                Label lblName = new Label("Name");
-                Label lblEmail = new Label("Email");
-                TextField txtName = new TextField();
-                TextField txtEmail = new TextField();
+    //Creates a window that asks for name and email
+    public Player createNewPlayer() throws Exception{
+        
+        //Window Elements
+        Label lblName = new Label("Name");
+        Label lblEmail = new Label("Email");
+        TextField txtName = new TextField();
+        TextField txtEmail = new TextField();
 
-                GridPane gpUserDialog = new GridPane();
-                gpUserDialog.add(lblName, 0, 0);
-                gpUserDialog.add(lblEmail, 0, 1);
-                gpUserDialog.add(txtName, 1, 0);
-                gpUserDialog.add(txtEmail, 1, 1);
+        //Basic format
+        GridPane gpUserDialog = new GridPane();
+        gpUserDialog.add(lblName, 0, 0);
+        gpUserDialog.add(lblEmail, 0, 1);
+        gpUserDialog.add(txtName, 1, 0);
+        gpUserDialog.add(txtEmail, 1, 1);
+        
+        //Window that will support all the previous nodes
+        Dialog<Player> dialog = new Dialog<>();
+        dialog.getDialogPane().setContent(gpUserDialog);
 
-                Dialog<Player> dialog = new Dialog<>();
-                dialog.getDialogPane().setContent(gpUserDialog);
-
-                ButtonType buttonTypeOk = new ButtonType("Listo", ButtonData.OK_DONE);
-                dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
-                dialog.initStyle(StageStyle.UNDECORATED);
-
-                dialog.setResultConverter(new Callback <ButtonType, Player>(){
-                    @Override
-                    public Player call(ButtonType b){
-                        if(b == buttonTypeOk){
-                            Color color;
-                            switch(Runner.iPlayers){
-                                case 0:
-                                    color = Color.RED;
-                                    break;
-                                case 1:
-                                    color = Color.BLUE;
-                                    break;
-                                case 2:
-                                    color = Color.GREEN;
-                                    break;
-                                case 3:
-                                    color = Color.ORANGE;
-                                    break;
-                                case 4:
-                                    color = Color.BLUEVIOLET;
-                                    break;
-                                case 5:
-                                    color = Color.BURLYWOOD;
-                                    break;
-                                case 6:
-                                    color = Color.DARKGOLDENROD;
-                                    break;
-                                case 7:
-                                    color = Color.DARKRED;
-                                    break;
-                                case 8:
-                                    color = Color.CORAL;
-                                    break;
-                                case 9:
-                                    color = Color.GREY;
-                                    break;
-                                default:
-                                    color = Color.BLACK;
-                                    break;
-                            }
-                            return new Player(txtName.getText(), txtEmail.getText(), color);
-                        }
-                        return null;
+        //Adds a button to finish the window
+        ButtonType buttonTypeOk = new ButtonType("Done", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        
+        //Converts the fields into a Player object
+        dialog.setResultConverter(new Callback <ButtonType, Player>(){
+            @Override
+            public Player call(ButtonType b){
+                if(b == buttonTypeOk){
+                    Color color;
+                    switch(Runner.iPlayers){
+                        case 0:
+                            color = Color.RED;
+                            break;
+                        case 1:
+                            color = Color.BLUE;
+                            break;
+                        case 2:
+                            color = Color.GREEN;
+                            break;
+                        case 3:
+                            color = Color.ORANGE;
+                            break;
+                        case 4:
+                            color = Color.BLUEVIOLET;
+                            break;
+                        case 5:
+                            color = Color.BURLYWOOD;
+                            break;
+                        case 6:
+                            color = Color.DARKGOLDENROD;
+                            break;
+                        case 7:
+                            color = Color.DARKRED;
+                            break;
+                        case 8:
+                            color = Color.CORAL;
+                            break;
+                        case 9:
+                            color = Color.GREY;
+                            break;
+                        default:
+                            color = Color.BLACK;
+                            break;
                     }
-                });
-
-                Optional <Player> result = dialog.showAndWait();
-
-                if(result.isPresent()){
-                    Runner.activePlayer = result.get();
+                    return new Player(txtName.getText(), txtEmail.getText(), Runner.iPlayers + 1, color);
                 }
+                return null;
+            }
+        });
+
+        //Stores the player
+        Optional <Player> result = dialog.showAndWait();
+
+        //Checks if there's a player, and checks if the fields are valid
+        if(result.isPresent()){
+            if(txtName.getText().isEmpty() || txtEmail.getText().isEmpty()){
+                return null;
+            }else{
+                return result.get();
+            }
+        }
+
+        return null;
     }
     
-    public void askHint(){
+    public String askHint(){
+        //Window that recieves user input in text
         TextInputDialog dialog = new TextInputDialog();
         
         dialog.initStyle(StageStyle.UNDECORATED);
         
         dialog.setTitle("Hint");
-        dialog.setHeaderText("Enter a one word hint");
+        dialog.setHeaderText("CHECK YOUR EMAIL FOR YOUR CARD... \nAfter you have chosen a color, enter a one word hint: \n\n IMPORTANT: After everyone guesses please click on the color you selected from the card to check everyone's score");
         
-//        VBox vbHint = new VBox();
-//        
-//        Label lblText = new Label("Colors sent by mail");
-//        TextField txtHint = new TextField();
-//        
-//        vbHint.getChildren().add(lblText);
-//        vbHint.getChildren().add(txtHint);
-//        
-//        dialog.getDialogPane().setContent(vbHint);
+        Optional <String> result = dialog.showAndWait();
+        
+        //Converts the result into String and returns them
+        if(result.isPresent()){
+            return(result.get());
+        }else{
+            return ("");
+        }
+        
+    }
+    
+    public void askForAnotherHint() throws Exception{
+        //Creates a Yes/No window
+        Label lblHint = new Label("Want to give another hint?");
+        
+        Dialog<String> dialog = new Dialog<>();
+        
+        dialog.getDialogPane().setContent(lblHint);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        
+        ButtonType buttonTypeOk = new ButtonType("Yes", ButtonData.YES);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonData.NO);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeNo);
+        
+        dialog.setResultConverter(new Callback <ButtonType, String>(){
+            @Override
+            public String call(ButtonType b){
+                if(b == buttonTypeOk){
+                    return "YES";
+                }
+                return "NO";
+            }
+        });
         
         Optional <String> result = dialog.showAndWait();
         
         if(result.isPresent()){
-            Label label = new Label();
-            label.setText("HINT: "+result.get());
-            GameLayout.setLBLHINT(label);
+            if(result.get().equals("YES"))
+                confirm = true;
+            else
+                confirm = false;
+        }
+        
+    }
+    
+    //Returns the global variable confirm, that was obtained in method
+    //askForAnotherHint
+    public boolean getHintConfirm(){
+        return confirm;
+    }
+    
+    public void showAlertWindow(String text){
+        Label lblAlert = new Label(text);
+        
+        Dialog<String> dialog = new Dialog<>();
+        
+        dialog.getDialogPane().setContent(lblAlert);
+        dialog.initStyle(StageStyle.UTILITY);
+        
+        ButtonType buttonTypeOk = new ButtonType("Yes", ButtonData.YES);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        
+        dialog.setResultConverter(new Callback <ButtonType, String>(){
+            @Override
+            public String call(ButtonType b){
+                if(b == buttonTypeOk){
+                    return "YES";
+                }
+                return null;
+            }
+        });
+        
+        Optional <String> result = dialog.showAndWait();
+        
+        if(result.isPresent()){
+            
+            text = result.get();
+            
         }
         
     }

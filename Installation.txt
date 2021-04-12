@@ -1,0 +1,8 @@
+To install this project and run in NetBeans, you must hace the javax.mail package.
+The package is included in the repo.
+
+------To Install----------
+1.- Download the javax.mail.jar to your directory
+2.- From system variables add javax.mail.jar to CLASS_PATH
+3.- In NetBeans click Tools>Libraries>Add Jar/Library and add the filepath
+    for the jar included in the NetBeans project
