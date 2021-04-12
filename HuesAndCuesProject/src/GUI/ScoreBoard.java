@@ -128,6 +128,7 @@ public class ScoreBoard extends BorderPane{
         imageLogo.setAlignment(Pos.TOP_RIGHT);
         imageLogo.add(imageView, 0, 0);
         this.setRight(imageLogo);
+        
     }
     
     private void setSize(){
@@ -165,9 +166,14 @@ public class ScoreBoard extends BorderPane{
     public void updateScoreBoard(){
         for (int i=0; i<Runner.getPlayers().size(); i++){
            int score = Runner.getPlayers().get(i).getScore();
-           if(score != 0){
+           if(score>0 && score<26){
             GridPane.setColumnIndex((Node) this.getTriangleGp().getChildren().get(i), (score-1));
            }
+           /*
+           if(score>25 && score<51){
+                GridPane.setColumnIndex((Node) this.getTriangleGp().getChildren().get(i), (50-score));
+                GridPane.setRowIndex((Node) this.getTriangleGp().getChildren().get(i), (i+Runner.getnOfPlayers()));
+           }*/
         }
     }
     
