@@ -55,7 +55,7 @@ public class ColorBlock extends Button{
         return this.color;
     }
     
-    protected void setSize(int length, int height){
+    protected void setSize(double length, double height){
         this.setMinSize(length, height);
         this.setMaxSize(length, height);
     }
