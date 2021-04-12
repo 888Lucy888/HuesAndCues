@@ -161,8 +161,7 @@ public class ScoreBoard extends BorderPane{
         this.scoreBoardStacked.getChildren().add(triangleGp);        
     }
     
-    
-    
+        
     public void updateScoreBoard(){
         for (int i=0; i<Runner.getPlayers().size(); i++){
            int score = Runner.getPlayers().get(i).getScore();
