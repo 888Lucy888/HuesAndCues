@@ -105,7 +105,6 @@ public class Board extends BorderPane{
                                     points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
                                     score = scoreBlocks(y, x, l, k);
                                     
-                                    
                                     //Adds the scoring grid
                                     String scr = "" + score;
                                     points.setText(scr + " ");
@@ -163,6 +162,8 @@ public class Board extends BorderPane{
                             
                             //Resets ScoringBoard
                             resetScore();
+                            //Updates Score
+                            Runner.getGame().getScoreBoard().updateScoreBoard();
                             
                             clearBlocks();
                             //Changes the hint-giver to the next player
