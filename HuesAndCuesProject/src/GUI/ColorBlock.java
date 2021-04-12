@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
  * @author Lucy
  */
 public class ColorBlock extends Button{
+    private Label lblPoints;
     private String color;
     private final int HEIGHT = 20;
     private final int LENGTH = 20;
@@ -22,7 +23,7 @@ public class ColorBlock extends Button{
     private int posX;
     private int posY;
     private boolean isSelected;
-    private String selectedBy;
+    private int selectedBy;
     
     private ColorBlock(){  
     }
@@ -42,7 +43,8 @@ public class ColorBlock extends Button{
         this.setPosX(posX);
         this.setPosY(posY);
         this.clearSelected();
-        this.setSelectedBy("");
+        this.setSelectedBy(-1);
+        this.setLabel(new Label());
     }
     
     private void setColor(String color){
@@ -86,7 +88,7 @@ public class ColorBlock extends Button{
         this.isSelected = true;
     }
     
-    public void setSelectedBy(String selected){
+    public void setSelectedBy(int selected){
         this.selectedBy = selected;
     }
     
@@ -95,15 +97,27 @@ public class ColorBlock extends Button{
     }
     
     public void clearSelectedBy(){
-        this.selectedBy = null;
+        this.selectedBy = -1;
     }
     
     public boolean getSelected(){
         return this.isSelected;
     }
     
-    public String getSelectedBy(){
+    public int getSelectedBy(){
         return this.selectedBy;
+    }
+    
+    public void setLabel(Label label){
+        this.lblPoints = label;
+    }
+    
+    public Label getLabel(){
+        return this.lblPoints;
+    }
+    
+    public void setLabelText(String text){
+        this.lblPoints.setText(text);
     }
     
 }

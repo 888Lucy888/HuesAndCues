@@ -38,6 +38,8 @@ public class Board extends BorderPane{
     //Used to clear the board
     private boolean isClear = false;
     private int score = 0;
+    private int cycles = 0;
+    private int matches = 0;
     
     public Board (int nPlayers) throws Exception{
         
@@ -94,6 +96,7 @@ public class Board extends BorderPane{
                             iRounds = 0;
                             for(int k = 0; k < 16; k++){
                                 for(int l = 0; l < 30; l++){
+                                    
                                     //Does the needed Scoring and shows it to the players
                                     Label points = new Label();
                                     points.setAlignment(Pos.CENTER);
@@ -101,39 +104,47 @@ public class Board extends BorderPane{
                                     points.setMinSize(20, 20);
                                     points.setStyle("-fx-text-color: black; -fx-font-weight: bold");
                                     score = scoreBlocks(y, x, l, k);
-                                    //Checks the players and compares them to the playe whoe selected the block
-                                    //If so adds the score to the given player 
-                                    for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
-                                        //Checks if the player selected the block
-                                        Runner.activePlayer = Runner.getPlayers().get(iCountPlayers);
-                                        if(Runner.activePlayer.getName().equals(blocks [l] [k].getSelectedBy())){
-                                            Runner.getPlayers().get(iCountPlayers).setScore(Runner.getPlayers().get(iCountPlayers).getScore() + score);
-                                            if(score>1){
-                                                Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
-                                            }
-                                        }
-                                    }
+                                    
+                                    
+                                    //Adds the scoring grid
                                     String scr = "" + score;
                                     points.setText(scr + " ");
+                                    
+                                    blocks[l][k].setText(scr);
+                                    
                                     if(score == 0){
                                         points.setVisible(false);
                                     }else{
-                                        //Test Runner.activePlayer.setScore(score);
+                                        //Checks the players and compares them to the playe whoe selected the block
+                                        //If so adds the score to the given player 
+                                        for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
+                                            //Checks if the player selected the block
+                                            Runner.activePlayer = Runner.getPlayers().get(iCountPlayers);
+                                            if(Runner.activePlayer.getId() == blocks [l] [k].getSelectedBy()){
+                                                Runner.getPlayers().get(iCountPlayers).setScore(Runner.getPlayers().get(iCountPlayers).getScore() + score);
+                                                if(score>1){
+                                                    Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
+                                                }
+                                            }
+                                        }
                                     }
                                     
                                     getScoreGp().add(points, l+1, k+1);
+                                    
                                     //Resets score
                                     score = 0;
                                     
                                 }
                             }
+                            matches++;
                             
                             for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
                                 System.out.println(Runner.getPlayers().get(iCountPlayers).getScore());
                             }
                             
+                            getMainStackPane().getChildren().add(getScoreGp());
                             getScoreGp().toFront();
-                            
+                            getScoreGp().setVisible(true);
                             
                             //Alerts the player of the change in cue giver
                             int index = Runner.iPlayers + 1;
@@ -158,7 +169,11 @@ public class Board extends BorderPane{
                             Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(false);
                             Runner.iPlayers++;
                             if(Runner.iPlayers == nPlayers){
+                                cycles++;
                                 Runner.iPlayers = 0;
+                            }
+                            if(cycles==3){
+                                //Here we call the score screen to give a winner
                             }
                             Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(true);
                             Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
@@ -171,10 +186,13 @@ public class Board extends BorderPane{
                                 Runner.iPlayers = 0;
                             }
                             Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
+                            
+                            getMainStackPane().getChildren().remove(getScoreGp());
+                            
                         }
                         //Used to put the pieces of the other players
                         else{
-                            setAsSelected(y, x, Runner.getActivePlayer().getName());
+                            setAsSelected(y, x, Runner.getActivePlayer().getId());
                             //Sets a triangle 
                             tri.setFill(Runner.getActivePlayer().getColor());
                             tri.setVisible(true);
@@ -265,11 +283,6 @@ public class Board extends BorderPane{
         gp.setStyle("-fx-background-color: black");
         gp.setAlignment(Pos.BOTTOM_CENTER);
         
-        
-        
-        //while(!br.readLine().isEmpty()){
-            //String colorCodes[] = br.readLine().split(" ");
-        //}    
     }
     
     private void setSize(){
@@ -323,9 +336,9 @@ public class Board extends BorderPane{
     }
     
     //Grabs a ColorBlock and sets it as selected
-    private void setAsSelected(int j, int i, String name){
+    private void setAsSelected(int j, int i, int id){
         blocks [j] [i].setAsSelected();
-        blocks [j] [i].setSelectedBy(name);
+        blocks [j] [i].setSelectedBy(id);
     }
     
     //Grbas a ColorBlock and resets selections
@@ -368,8 +381,12 @@ public class Board extends BorderPane{
     }
     
     private void resetScore(){
+        this.scoreGp.setVisible(false);
         this.scoreGp.getChildren().clear();
         this.scoreGp.toBack();
+        Label space = new Label(".");
+        space.setMinSize(20, 20);
+        this.scoreGp.add(space, 0, 0);
     }
 
     public StackPane getMainStackPane() {
@@ -378,7 +395,7 @@ public class Board extends BorderPane{
 
     public void setMainStackPane() {
         this.mainStackPane = new StackPane();
-        this.mainStackPane.getChildren().add(scoreGp);
+        //this.mainStackPane.getChildren().add(scoreGp);
         this.mainStackPane.getChildren().add(gp);
     }
     

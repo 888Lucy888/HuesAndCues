@@ -113,7 +113,7 @@ public class CustomDialogs{
                             color = Color.BLACK;
                             break;
                     }
-                    return new Player(txtName.getText(), txtEmail.getText(), color);
+                    return new Player(txtName.getText(), txtEmail.getText(), Runner.iPlayers + 1, color);
                 }
                 return null;
             }

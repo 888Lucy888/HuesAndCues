@@ -16,6 +16,7 @@ public class Player {
     private int score = 0;
     private String email;
     private Color playerColor;
+    private int id;
     
     //Indicates if this player will choose a color or hint
     private boolean isLeader;
@@ -24,9 +25,10 @@ public class Player {
         
     }
     
-    public Player(String name, String email, Color color){
+    public Player(String name, String email, int newId, Color color){
         this.setName(name);
         this.setEmail(email);
+        this.setId(newId);
         this.setColor(color);
         this.setIsLeader(false);
     }
@@ -69,6 +71,14 @@ public class Player {
     
     public void setIsLeader(boolean leader){
         this.isLeader = leader;
+    }
+    
+    public void setId(int newId){
+        this.id = newId;
+    }
+    
+    public int getId(){
+        return this.id;
     }
     
 }
