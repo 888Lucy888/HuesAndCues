@@ -66,6 +66,8 @@ public class Board extends BorderPane{
                 tri.setFill(Color.BLACK);
                 
                 //Creates a ColorBlock
+                if(j==0 && i==0)
+                    seperator[j] = "53251A";
                 blocks [j] [i] = new ColorBlock(seperator[j], i, j);
                 
                 //Adds position to the ColorBlock
@@ -102,13 +104,11 @@ public class Board extends BorderPane{
                                     //Checks the players and compares them to the playe whoe selected the block
                                     //If so adds the score to the given player 
                                     for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
+                                        //Checks if the player selected the block
                                         Runner.activePlayer = Runner.getPlayers().get(iCountPlayers);
                                         if(Runner.activePlayer.getName().equals(blocks [l] [k].getSelectedBy())){
-                                            System.out.println(Runner.getPlayers().get(iCountPlayers).getName()
-                                                    + ": " + Runner.getPlayers().get(iCountPlayers).getScore() + " + " + score);
                                             Runner.getPlayers().get(iCountPlayers).setScore(Runner.getPlayers().get(iCountPlayers).getScore() + score);
                                             if(score>1){
-                                                int newScoreCue = Runner.getPlayers().get(Runner.iPlayers).getScore();
                                                 Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
                                             }
                                         }
@@ -122,6 +122,7 @@ public class Board extends BorderPane{
                                     }
                                     
                                     getScoreGp().add(points, l+1, k+1);
+                                    //Resets score
                                     score = 0;
                                     
                                 }
