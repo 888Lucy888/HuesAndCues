@@ -42,6 +42,9 @@ public class Runner extends Application {
     //Receives basic user I/O
     public static CustomDialogs userInput;
     
+    //The stage
+    private static Stage mainStage;
+    
     @Override
     public void init() throws Exception{
         
@@ -49,6 +52,8 @@ public class Runner extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{
+        
+        mainStage = primaryStage;
         
         //Setting up number of Players and their information
         userInput = new CustomDialogs();
@@ -71,9 +76,9 @@ public class Runner extends Application {
         //Setting up Board Game
         game = new GameLayout(nOfPlayers);
         Scene mainScene = new Scene(game, LENGTH, HEIGHT);
-        primaryStage.setTitle("Hues And Cues");
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
+        mainStage.setTitle("Hues And Cues");
+        mainStage.setScene(mainScene);
+        mainStage.show();
         
         //Turning ColorBlocks into an Array so we can shuffle it wiith Collections
         ColorBlock[][] shuffleBlocks = game.getBoard().getBlocks();
@@ -159,6 +164,26 @@ public class Runner extends Application {
     
     public static void updatePlayers(int index){
         Runner.players.get(index).setScore(Runner.activePlayer.getScore());
+    }
+    
+    public static void limitReached(){
+        Player best = null;
+        for(int i = 0; i < nOfPlayers; i++){
+            if(i==0)
+                best = getPlayers().get(i);
+            if(getPlayers().get(i).getScore() > best.getScore())
+                best = getPlayers().get(i);
+        }
+        
+        Winner win = new Winner(best);
+        Scene winnerScene = new Scene(win);
+        mainStage.setScene(winnerScene);
+    }
+    
+    public static void winnerReached(Player best){
+        Winner win = new Winner(best);
+        Scene winnerScene = new Scene(win);
+        mainStage.setScene(winnerScene);
     }
     
 }

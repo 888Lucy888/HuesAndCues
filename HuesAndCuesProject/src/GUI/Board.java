@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import huesandcuesproject.Player;
 import huesandcuesproject.Runner;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -125,6 +126,10 @@ public class Board extends BorderPane{
                                                     Runner.getPlayers().get(Runner.iPlayers).setScore(Runner.getPlayers().get(Runner.iPlayers).getScore() + 1);
                                                 }
                                             }
+                                            if(Runner.getPlayers().get(iCountPlayers).getScore() >= 50){
+                                                Player best = Runner.getPlayers().get(iCountPlayers);
+                                                Runner.winnerReached(best);
+                                            }
                                         }
                                     }
                                     
@@ -136,10 +141,6 @@ public class Board extends BorderPane{
                                 }
                             }
                             matches++;
-                            
-                            for(int iCountPlayers = 0; iCountPlayers < nPlayers; iCountPlayers++){
-                                System.out.println(Runner.getPlayers().get(iCountPlayers).getScore());
-                            }
                             
                             getMainStackPane().getChildren().add(getScoreGp());
                             getScoreGp().toFront();
@@ -175,6 +176,7 @@ public class Board extends BorderPane{
                             }
                             if(cycles==3){
                                 //Here we call the score screen to give a winner
+                                Runner.limitReached();
                             }
                             Runner.getPlayers().get(Runner.getiPlayers()).setIsLeader(true);
                             Runner.activePlayer = Runner.getPlayers().get(Runner.getiPlayers());
