@@ -159,9 +159,10 @@ public class ScoreBoard extends BorderPane{
                 4.0, 0.0,
                 8.0, 8.0
             });
+            int index = Runner.getPlayers().get(i).getScore();
             tri.setFill(Runner.getPlayers().get(i).getColor());
             tri.setVisible(true);
-            this.getTriangleGp().getChildren().get(Runner.getPlayers().get(i).getScore());
+            this.getTriangleGp().getChildren().add(index, tri);
         }
     }
     
